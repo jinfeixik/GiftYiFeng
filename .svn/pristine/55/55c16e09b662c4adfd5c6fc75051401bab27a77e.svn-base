@@ -1,0 +1,270 @@
+package com.qst.action;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.springframework.stereotype.Repository;
+
+import com.qst.dao.impl.TbGoodsTypeInfoDaoImpl;
+import com.qst.entity.TbGoodsImageInfo;
+import com.qst.entity.TbGoodsTypeInfo;
+import com.qst.entity.TbGoodsDetailInfo;
+
+@Repository
+public class FindGoodsTypeAction {
+	@Resource
+	private TbGoodsTypeInfoDaoImpl tgd;
+	
+	private String message;
+	private String occation;
+	private int price;
+	private String object;
+	private String classify;
+	private boolean flag1;
+	private boolean flag2;
+	private boolean flag3;
+	private boolean flag4;
+	private int totalNum;
+	private int curPage;
+	private int totalPage;
+	private JSONArray search_list;
+
+	public String findGoodsType() {
+		List<TbGoodsDetailInfo> tgi1 = new ArrayList<TbGoodsDetailInfo>();
+		System.out.println(occation+" "+ (price ==0) +" "+ object+" "+classify);
+		List<TbGoodsTypeInfo> tg = tgd.findGoodsType(occation, price, object,
+				classify);
+		int goodsTotals =tgd.findGoodsTotals();
+		for (int i = 0; i < goodsTotals; i++) {
+			// 类型id查询商品详情信息
+			List<TbGoodsDetailInfo> tgi = tgd.findGoodsDetail(tg.get(i)
+					.getGoodsTypeId(), message);
+			tgi1.add(tgi.get(0));
+		}
+
+		// 分页
+		totalNum = tgi1.size();
+		System.out.println("总记录条数" + totalNum);
+		int num = 8;
+		if (totalNum % num == 0) {
+			totalPage = totalNum / num;
+		} else {
+			totalPage = totalNum / num + 1;
+		}
+
+		if (curPage < 1) {
+			curPage = 1;
+		}
+		if (curPage > totalPage) {
+			curPage = totalPage;
+		}
+		int start = (curPage - 1) * num;
+		int end = start + num;
+		System.out.println("start  " + start + "   " + "end  " + end);
+
+		// 商品排序
+		if (flag1 == true) {
+			Collections.sort(tgi1, new Comparator<TbGoodsDetailInfo>() {
+				public int compare(TbGoodsDetailInfo arg0,
+						TbGoodsDetailInfo arg1) {
+					return arg1.getGoodsSales().compareTo(arg0.getGoodsSales());
+				}
+			});
+		}
+		if (flag2 == true) {
+			Collections.sort(tgi1, new Comparator<TbGoodsDetailInfo>() {
+				public int compare(TbGoodsDetailInfo arg0,
+						TbGoodsDetailInfo arg1) {
+					return arg1.getGoodsTime().compareTo(arg0.getGoodsTime());
+				}
+			});
+		}
+		if (flag3 == true) {
+			Collections.sort(tgi1, new Comparator<TbGoodsDetailInfo>() {
+				public int compare(TbGoodsDetailInfo arg0,
+						TbGoodsDetailInfo arg1) {
+					return arg0.getGoodsPrice().compareTo(arg1.getGoodsPrice());
+				}
+			});
+		}
+		if (flag4 == true) {
+			Collections.sort(tgi1, new Comparator<TbGoodsDetailInfo>() {
+				public int compare(TbGoodsDetailInfo arg0,
+						TbGoodsDetailInfo arg1) {
+					return arg1.getGoodsPrice().compareTo(arg0.getGoodsPrice());
+				}
+			});
+		}
+		List<TbGoodsImageInfo> tgi2 = new ArrayList<TbGoodsImageInfo>();
+		for (int j = 0; j < tgi1.size(); j++) {
+			// 单件商品
+			if (j >= start && j < end) {
+				System.out.println("id：    " + tgi1.get(j).getGoodsId());
+				System.out.println("名称：   " + tgi1.get(j).getGoodsName());
+				System.out.println("价格：   " + tgi1.get(j).getGoodsPrice());
+				System.out.println("时间：   " + tgi1.get(j).getGoodsTime());
+				List<TbGoodsImageInfo> tgi3 = tgd.findGoodsImage(tgi1.get(j).getGoodsId());
+				if (tgi3.size() == 0) {
+					//http://img3.liwuyou.com/images/201811/source_img/3888_P_1541475290472.jpg!pro500.jpg
+					tgi2.add(tgi2.get(0));
+					System.out.println("图片为空");
+				} else {
+					System.out.println("url:"+tgi3.get(0).getGoodsImagePath());
+					tgi2.add(tgi3.get(0));
+					//System.out.println("url"+tgi3.get(0));
+				}
+				System.out.println("--------------");
+			}
+		}
+
+		// 获取每一个选项的选项名和票数
+		JSONArray jArray = new JSONArray();
+		for (int i = 0; i < num; i++) {
+			JSONObject jObject = new JSONObject();
+			// 购物车id
+			jObject.put("id", tgi1.get(i).getGoodsId());
+			// 获取图片路径
+			jObject.put("image", tgi2.get(i).getGoodsImagePath());
+			// 商品名称
+			jObject.put("name", tgi1.get(i).getGoodsName());
+			// 商品单价
+			jObject.put("price", tgi1.get(i).getGoodsPrice());
+			// 商品上新
+			 Date d = new Date(); 
+			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+			 String dateNow = sdf.format(d); 
+			 //System.out.println(dateNow.compareTo(tgi1.get(i).getGoodsTime()));
+			jObject.put("time", dateNow.compareTo(tgi1.get(i).getGoodsTime()));
+			// 商品评价数
+			// jObject.put("comment", tgi1.get(i).getGoodsTime());
+
+			jArray.add(jObject);
+		}
+		search_list = new JSONArray();
+		search_list = jArray;
+
+		return "success";
+	}
+
+	public TbGoodsTypeInfoDaoImpl getTgd() {
+		return tgd;
+	}
+
+	public void setTgd(TbGoodsTypeInfoDaoImpl tgd) {
+		this.tgd = tgd;
+	}
+
+	public String getOccation() {
+		return occation;
+	}
+
+	public void setOccation(String occation) {
+		this.occation = occation;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getObject() {
+		return object;
+	}
+
+	public void setObject(String object) {
+		this.object = object;
+	}
+
+	public String getClassify() {
+		return classify;
+	}
+
+	public void setClassify(String classify) {
+		this.classify = classify;
+	}
+
+	public int getTotalNum() {
+		return totalNum;
+	}
+
+	public void setTotalNum(int totalNum) {
+		this.totalNum = totalNum;
+	}
+
+	public boolean isFlag1() {
+		return flag1;
+	}
+
+	public void setFlag1(boolean flag1) {
+		this.flag1 = flag1;
+	}
+
+	public boolean isFlag2() {
+		return flag2;
+	}
+
+	public void setFlag2(boolean flag2) {
+		this.flag2 = flag2;
+	}
+
+	public boolean isFlag3() {
+		return flag3;
+	}
+
+	public void setFlag3(boolean flag3) {
+		this.flag3 = flag3;
+	}
+
+	public boolean isFlag4() {
+		return flag4;
+	}
+
+	public void setFlag4(boolean flag4) {
+		this.flag4 = flag4;
+	}
+
+	public int getCurPage() {
+		return curPage;
+	}
+
+	public void setCurPage(int curPage) {
+		this.curPage = curPage;
+	}
+
+	public int getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public JSONArray getSearch_list() {
+		return search_list;
+	}
+
+	public void setSearch_list(JSONArray search_list) {
+		this.search_list = search_list;
+	}
+	
+}

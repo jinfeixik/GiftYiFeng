@@ -1,0 +1,30 @@
+package com.qst.test;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.qst.dao.TbGoodsTypeInfoDao;
+import com.qst.dao.impl.TbGoodsDetailInfoDaoImpl;
+import com.qst.dao.impl.TbGoodsTypeInfoDaoImpl;
+import com.qst.entity.TbGoodsDetailInfo;
+
+public class TestYY001 {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		String path = "applicationContext.xml";
+		ApplicationContext ac = new ClassPathXmlApplicationContext(path);
+		TbGoodsDetailInfoDaoImpl tgd = (TbGoodsDetailInfoDaoImpl)ac.getBean("tbGoodsDetailInfoDaoImpl");
+		
+		TbGoodsDetailInfo t = new TbGoodsDetailInfo();
+		
+		t.setGoodsName("peter11111111sss");
+		
+		tgd.addTbGoodsDetailInfo(t);
+		
+
+	}
+
+}

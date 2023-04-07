@@ -1,0 +1,65 @@
+body{
+	background-image:image/login_background.jpg;
+	background-color: #feeeed;
+	width:100%;
+	height: 100%;
+}
+.login{
+	width:600px;
+	background-color: #fff;
+	float:right;
+	margin:50px 100px 0px 0px;
+}
+.login_context_center{
+	padding:50px 100px;
+}
+.login_div1{
+	width:100%;
+	height:30px;
+	
+	
+}
+.login_div1 h3{
+	float:left;
+}
+.notice{
+	color:red;
+	float:right;
+    padding-top:20px;
+}
+input{
+	padding:10px;
+	width:100%;
+	
+}
+.username{
+
+	border: 1px solid #eee;
+}
+.password{
+   
+	border:1px solid #eee;
+}
+.login_submit{
+	background:#d93732;
+	border: #d93732;
+	color: #fff;
+	padding:11px;
+}
+.no_account{
+float:left;
+	
+}
+a{text-decoration:none;color:#000;}
+a:hover{text-decoration:none}
+
+.login_foot{
+	margin-top:15px;
+	margin-bottom:50px;
+}
+.forgetpassword{
+	float:right;
+}
+.a_register{
+	color:#cb9750;
+}

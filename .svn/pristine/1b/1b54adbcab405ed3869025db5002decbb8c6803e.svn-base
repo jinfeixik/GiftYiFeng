@@ -1,0 +1,49 @@
+package com.qst.dao;
+
+
+import java.util.List;
+
+import com.qst.entity.TbGoodsImageInfo;
+import com.qst.entity.TbGoodsStyleInfo;
+/**
+ * 
+ * @author 李阳liyang
+ * @date 2019-8-13下午7:22:25
+ * @version v1.0
+ */
+
+public interface TbGoodsStyleInfoDao {
+	
+	public void addGoods(TbGoodsStyleInfo tbGoodsStyleInfo);
+	
+	public TbGoodsStyleInfo findGoodsStyle(int goodsStyleId);
+
+	public int findImageIdStyle(Integer goodsStyleId);
+
+	public int findGoodsIdStyle(Integer goodsStyleId);
+	
+	/**
+	 * 样式信息(liyang)
+	 */
+	public List<TbGoodsStyleInfo> findGoodStyleInfo(String hql,int goodsId);
+	
+	
+	/**
+	 * 图片信息(liyang)
+	 */
+	public List<TbGoodsImageInfo> findGoodsImageInfo(String hql,int goodsImageId);
+	
+	public TbGoodsStyleInfo findStyle(int styleId);
+	
+	public void addStyle(TbGoodsStyleInfo tbGoodsStyleInfo);
+	
+	public void deleteStyle(int id);
+	
+	public void updateStyle(TbGoodsStyleInfo tbGoodsStyleInfo);
+
+	public TbGoodsStyleInfo findGoodsStyleInfoService(int goodStyleId);
+
+	public void updateStock(TbGoodsStyleInfo tbGoodsStyleInfo);
+	
+
+}

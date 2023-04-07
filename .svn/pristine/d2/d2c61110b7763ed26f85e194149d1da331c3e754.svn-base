@@ -1,0 +1,266 @@
+package com.qst.action;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.qst.dao.TbUserInfoDao;
+import com.qst.entity.TbUserAddressInfo;
+import com.qst.entity.TbUserCommentInfo;
+import com.qst.entity.TbUserInfo;
+import com.qst.service.AnalysisDataService;
+import com.qst.service.TbUserCommentInfoService;
+import com.qst.service.TbUserInfoService;
+
+/**
+ * 
+ * @author 李阳liyang
+ * @date 2019-8-12下午2:22:21
+ * @version v1.0
+ */
+@Repository
+public class AnalysisDataAction {
+	@Resource
+	private   TbUserCommentInfoService  tbUserCommentInfoService;
+	
+	@Resource
+	private  AnalysisDataService   analysisDataService;
+	
+	
+	private TbUserCommentInfo  tbUserCommentInfo;
+	
+
+	private TbUserInfo tbUserInfo;
+	
+	private List<TbUserCommentInfo> tbUserCommentInfos = new ArrayList<TbUserCommentInfo>();
+	
+	private List<TbUserInfo> tbUserInfos = new ArrayList<TbUserInfo>();
+	
+	private List<TbUserAddressInfo> tbUserAddressInfos = new ArrayList<TbUserAddressInfo>();
+	
+	private  int num[];
+	
+	private int   goodsId;
+	
+	private JSONArray jArray;
+	
+	private JSONArray address;
+	
+	//分析评论星级
+	public String AnalysisCommentStar(){
+		System.out.println("id=****************"+goodsId);
+		tbUserCommentInfos=tbUserCommentInfoService.findGoodsTbUserCommentInfos(goodsId);
+		
+		int commentStar[];
+		num=new int [5];
+		commentStar=new int[tbUserCommentInfos.size()];
+		
+		for(int i=0;i<tbUserCommentInfos.size();i++){
+			commentStar[i]=tbUserCommentInfos.get(i).getUserCommentStar();
+		}
+		
+		for(int j=0;j<commentStar.length;j++){
+			if(commentStar[j]==1){
+			num[0]++;
+			}else if(commentStar[j]==2){
+		    num[1]++;
+			}else if(commentStar[j]==3){
+		    num[2]++;
+			}else if(commentStar[j]==4){
+			num[3]++;
+			}else if(commentStar[j]==5){
+			num[4]++;
+			}
+		}
+		System.out.println("一星"+num[0]+"二星"+num[1]+"三星"+num[2]+"四星"+num[3]+"五星"+num[4]);
+		return "success";
+	}
+	//分析用户年龄
+	public String AnalysisUserBirthday(){
+		//tbUserInfos=tbUserInfoService.
+	    tbUserInfos=analysisDataService.findUserAll();
+	    String userAge[];
+		num=new int [5];
+		userAge=new String[tbUserInfos.size()];
+		
+		for(int i=0;i<tbUserInfos.size();i++){
+			userAge[i]=tbUserInfos.get(i).getUserBirthday();
+		}
+		
+		for(int j=0;j<userAge.length;j++){
+			//70后
+			if(userAge[j].compareTo("1969-12-31")==1&&userAge[j].compareTo("1980-01-01")==-1){
+			num[0]++;
+			
+			//80后
+			}else if(userAge[j].compareTo("1979-12-31")==1&&userAge[j].compareTo("1990-01-01")==-1){
+		    num[1]++;
+		    
+		    //90后
+			}else if(userAge[j].compareTo("1989-12-31")==1&&userAge[j].compareTo("2000-01-01")==-1){
+		    num[2]++;
+		    
+		    //00后
+			}else if(userAge[j].compareTo("1999-12-31")==1&&userAge[j].compareTo("2010-01-01")==-1){
+			num[3]++;
+			
+			//其它
+			}else{
+			num[4]++;
+			
+			}
+		}
+		System.out.println("70后"+num[0]+"80后"+num[1]+"90后"+num[2]+"00后"+num[3]+"其它"+num[4]);
+		return "success";
+	  
+	}
+	
+	//分析地区分布
+	public String  AnalysisUserAdress(){
+		
+         List<String> list = new ArrayList<String>();
+         
+         for(int j=0;j<analysisDataService.findUserAddress().size();j++){
+        	 
+        	 list.add(analysisDataService.findUserAddress().get(j).getAddressReciverAddress());
+         
+         } 
+		
+
+        Set<String> uniqueSet = new HashSet<String>(list);
+        
+        for(String tua: uniqueSet){
+        	
+        	System.out.println(tua+" "+Collections.frequency(list,tua));
+        }
+		
+        
+		jArray = new JSONArray();
+		for (String tua: uniqueSet) {
+			
+			JSONObject jObject = new JSONObject();
+			
+			jObject.put("name", tua);
+			
+			jObject.put("value", Collections.frequency(list,tua)*50);
+			
+			
+			jArray.add(jObject);
+			
+			
+		}
+		address=new JSONArray();
+		
+		address=jArray;
+		ServletActionContext.getRequest().setAttribute("address", address);
+		System.out.println("111"+address);
+	return  "success";
+	
+	}
+	
+	
+	
+	public TbUserCommentInfoService getTbUserCommentInfoService() {
+		return tbUserCommentInfoService;
+	}
+	public void setTbUserCommentInfoService(
+			TbUserCommentInfoService tbUserCommentInfoService) {
+		this.tbUserCommentInfoService = tbUserCommentInfoService;
+	}
+	
+	public TbUserCommentInfo getTbUserCommentInfo() {
+		return tbUserCommentInfo;
+	}
+	public void setTbUserCommentInfo(TbUserCommentInfo tbUserCommentInfo) {
+		this.tbUserCommentInfo = tbUserCommentInfo;
+	}
+	
+	public TbUserInfo getTbUserInfo() {
+		return tbUserInfo;
+	}
+	public void setTbUserInfo(TbUserInfo tbUserInfo) {
+		this.tbUserInfo = tbUserInfo;
+	}
+	
+	public List<TbUserCommentInfo> getTbUserCommentInfos() {
+		return tbUserCommentInfos;
+	}
+	public void setTbUserCommentInfos(List<TbUserCommentInfo> tbUserCommentInfos) {
+		this.tbUserCommentInfos = tbUserCommentInfos;
+	}
+	
+	public int[] getNum() {
+		return num;
+	}
+	public void setNum(int[] num) {
+		this.num = num;
+	}
+	
+	public int getGoodsId() {
+		return goodsId;
+	}
+	public void setGoodsId(int goodsId) {
+		this.goodsId = goodsId;
+	}
+	
+	public AnalysisDataService getAnalysisDataService() {
+		return analysisDataService;
+	}
+	public void setAnalysisDataService(AnalysisDataService analysisDataService) {
+		this.analysisDataService = analysisDataService;
+	}
+	
+	public List<TbUserInfo> getTbUserInfos() {
+		return tbUserInfos;
+	}
+	public void setTbUserInfos(List<TbUserInfo> tbUserInfos) {
+		this.tbUserInfos = tbUserInfos;
+	}
+	
+	public List<TbUserAddressInfo> getTbUserAddressInfos() {
+		return tbUserAddressInfos;
+	}
+	public void setTbUserAddressInfos(List<TbUserAddressInfo> tbUserAddressInfos) {
+		this.tbUserAddressInfos = tbUserAddressInfos;
+	}
+	
+	public JSONArray getjArray() {
+		return jArray;
+	}
+	public void setjArray(JSONArray jArray) {
+		this.jArray = jArray;
+	}
+	
+	public JSONArray getAddress() {
+		return address;
+	}
+	public void setAddress(JSONArray address) {
+		this.address = address;
+	}
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+}

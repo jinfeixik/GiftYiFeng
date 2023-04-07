@@ -1,0 +1,59 @@
+package com.qst.vo;
+
+import java.util.List;
+
+public class MyOrderVO {
+	
+	private int orderId;
+	private List<String> goodsImagePath;
+	private List<String> goodsName;
+	private double goodsPrice;
+	private double orderAmount;
+	private String orderOrderNumber;
+	private String orderOrderTime;
+	public int getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+	public List<String> getGoodsImagePath() {
+		return goodsImagePath;
+	}
+	public void setGoodsImagePath(List<String> goodsImagePath) {
+		this.goodsImagePath = goodsImagePath;
+	}
+	
+	public List<String> getGoodsName() {
+		return goodsName;
+	}
+	public void setGoodsName(List<String> goodsName) {
+		this.goodsName = goodsName;
+	}
+	public double getGoodsPrice() {
+		return goodsPrice;
+	}
+	public void setGoodsPrice(double goodsPrice) {
+		this.goodsPrice = goodsPrice;
+	}
+	public double getOrderAmount() {
+		return orderAmount;
+	}
+	public void setOrderAmount(double orderAmount) {
+		this.orderAmount = orderAmount;
+	}
+	public String getOrderOrderNumber() {
+		return orderOrderNumber;
+	}
+	public void setOrderOrderNumber(String orderOrderNumber) {
+		this.orderOrderNumber = orderOrderNumber;
+	}
+	public String getOrderOrderTime() {
+		return orderOrderTime;
+	}
+	public void setOrderOrderTime(String orderOrderTime) {
+		this.orderOrderTime = orderOrderTime;
+	}
+	
+
+}

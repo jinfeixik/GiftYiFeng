@@ -1,0 +1,182 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/login.css">
+<link rel="stylesheet" type="text/css" href="css/forgot.css">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/flow.css" rel="stylesheet" type="text/css" />
+<link href="css/font-awesome.css" rel="stylesheet">
+<!--安全验证  -->
+<link rel="stylesheet" href="css/jigsaw.css">
+<style>
+.container {
+  width: 310px;
+  margin: 0px auto;
+}
+
+#msg {
+  width: 100%;
+  line-height: 40px;
+  font-size: 14px;
+  text-align: center;
+}
+</style>
+</head>
+
+<body background="image/login_background.png"
+	style="background-repeat:no-repeat ;background-size:100% 100%;">
+
+
+	<div class="login">
+		<div class="login_context_center">
+			<form name="login" action="login" method="post">
+				<div class="login_div1">
+					<h3>
+						<b>欢迎回来</b>
+					</h3>
+					<h5 class="notice">${notice}</h5>
+				</div>
+				
+				<div class="">&nbsp;</div>
+				<div class="">
+					<input type="text" name="userInputInfo" placeholder="请输入用户名/手机号/邮箱"
+						class="username" /> <i class="icon-ok"></i>
+				</div>
+				<div class="">&nbsp;</div>
+				<div class="">
+					<input type="password" name="userPassword" placeholder="请输入密码"
+						class="password" />
+				</div>
+				<input id="res" value="false" name="res" style=" display:none">
+				<div class="">&nbsp;</div>
+				<div class="verify-wrap" id="verify-wrap"></div>
+				<div class="">&nbsp;</div>
+				<div class="">
+					<input type="submit" value="立即登录" class="login_submit"
+						id="getState">
+				</div>
+				<div class="login_foot">
+					<div class="no_account">
+						还没有账号？ <a href="register.jsp" class="a_register">现在注册</a>
+					</div>
+					<div id="content" style="text-align:center;margin:40px auto;">
+						<a class="forgetpassword" href="FogetPassword.jsp">忘记密码</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jq-slideVerify.js" type="text/javascript"
+		charset="utf-8"></script>
+
+	<!--content/-->
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/flow.js"></script>
+	
+	
+	
+	<script type="text/javascript">
+		var myAlert = document.getElementById("alert");
+		var myMask = document.getElementById('mask');
+
+		$("#content a").click(function() {
+			myMask.style.display = "block";
+			myAlert.style.display = "block";
+			document.body.style.overflow = "hidden";
+		})
+		$(".close").click(function() {
+			myAlert.style.display = "none";
+			myMask.style.display = "none";
+		})
+		
+	</script>
+
+
+<script type="text/javascript">
+//登录时长条滑块验证
+		$(function() {
+			console.log(parseFloat('1px'))
+
+			var SlideVerifyPlug = window.slideVerifyPlug;
+			var slideVerify = new SlideVerifyPlug('#verify-wrap', {
+				wrapWidth : '400',//设置 容器的宽度 ，默认为 350 ，也可不用设，你自己css 定义好也可以，插件里面会取一次这个 容器的宽度
+				initText : '请按住滑块，拖到最右边', //设置  初始的 显示文字
+				sucessText : '验证通过',//设置 验证通过 显示的文字
+				getSucessState : function(res) {
+					//当验证完成的时候 会 返回 res 值 true，只留了这个应该够用了 
+					console.log(res);
+				}
+			});
+			$("#getState").on('click',function() {
+				$('#res').val(slideVerify.slideFinishState);
+		/*		alert($('#res').val());*/
+							})
+		})
+	</script>
+<script type="text/javascript" src="js/jigsaw.js"></script>
+<!--  
+<script type="text/javascript">
+//忘记密码时的安全验证
+        jigsaw.init(document.getElementById('captcha'), function () {
+         var phoneNumber = $("#phoneNumber").val();
+          //window.location.href='phoneCode?phoneNumber='+phoneNumber;
+         $.ajax({
+	      url:"phoneCode",
+	      type:"post",
+	      dataType:"json",
+	      data:{phoneNumber:phoneNumber},
+	      success:function(data){     }
+	      })
+	    alert('验证码已发送，请点下一步');
+        });
+        $("#phone").click(function(){
+		 var phoneNumber = $("#phoneNumber").val();
+		 console.log(phoneNumber);
+	      $.ajax({
+	      url:"phoneCode",
+	      type:"post",
+	      dataType:"json",
+	      data:{phoneNumber:phoneNumber},
+	      success:function(data){     }
+	      })
+	       });
+	       
+	     $("#findUserInfo").click(function(){
+	        var phoneNumber=document.getElementById('phoneNumber').value;
+	         $.ajax({
+	         url:"findUserInfo",
+	         type:"post",
+	         dataType:"json",
+	         data:{phoneNumber:phoneNumber},
+	         success:function(data){  
+	         }
+	         });
+	           
+	        if(${user.userId==null})
+	        alert("此邮箱/手机没有注册");
+	        else
+	        alert("此帐号用户名为:"+ '${user.userName}'+" 继续找回确认后请点击下一步");
+	         
+	       });
+        $("#ifphoneCode").click(function(){
+         /* var code=document.getElementById('webPagePhoneNumber').value;                
+            $.ajax({
+             url:"updateFogetPassword",
+	         type:"post",
+	         dataType:"json"
+	         data:{phoneCode:code},
+	         success:function(data){  
+	         }
+	         });
+            */
+             });
+          
+ </script>
+-->
+</body>
+</html>

@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+/*包含以下四种的链接*/
+a {
+    text-decoration: none;
+}
+/*正常的未被访问过的链接*/
+a:link {
+    text-decoration: none;
+}
+/*已经访问过的链接*/
+a:visited {
+    text-decoration: none;
+}
+/*鼠标划过(停留)的链接*/
+a:hover {
+    text-decoration: none;
+}
+/* 正在点击的链接*/
+a:active {
+    text-decoration: none;
+}
+
+
+.userInfomenu{
+	width:20%;
+    background: #fff;
+    float: left;
+   
+}
+.userInfo{
+	margin-left:2%;
+	width:68%;
+	padding:50px;
+	background: #fff;
+	float: left;
+}
+hr{
+	border:0.5px solid #ededed;
+}
+input{
+	width:500px;
+	border:0.5px solid #ccc;
+}
+.submit{
+	background:#d93732;
+	border: #d93732;
+	color: #fff;
+	padding:11px;
+	width:200px;
+	float:right;
+}
+
+.title{
+	margin-top:20px;
+	width:10%;
+	float:left;
+}
+.content{
+	margin-top:10px;
+	width:90%;
+	float:left;
+}
+.info_li{
+	width:100%;
+	float:left;
+	padding:5px;
+}
+.Sex{
+	width:30px;
+}

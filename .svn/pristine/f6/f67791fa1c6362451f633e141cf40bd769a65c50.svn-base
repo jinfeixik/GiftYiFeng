@@ -1,0 +1,68 @@
+package com.qst.dao;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.qst.entity.TbGoodsDetailInfo;
+
+@Service
+public interface TbGoodsDetailInfoDao {
+	
+	/**
+	 * @param tbGoodsDetailInfo
+	 * 添加商品
+	 */
+	public void addTbGoodsDetailInfo(TbGoodsDetailInfo tbGoodsDetailInfo);
+	
+	/**
+	 * @param status
+	 * 修改商品状态   0为上架，1为下架
+	 */
+	public void statusGoods(int status, int goodsId);
+	
+	/**
+	 * @param goodsId
+	 * @return
+	 * 返回数据表中有关商品id的所有信息
+	 */
+	
+	/**
+	 * @param hql
+	 * @return
+	 * 查找所有商品
+	 */
+	public List<TbGoodsDetailInfo> findTbGoodsDetailInfos(String hql);
+	
+	
+	/**
+	 * @param goodsId
+	 * @return
+	 * 返回id为goodsId的商品
+	 */
+	public TbGoodsDetailInfo findTbGoodsDetailInfo(int goodsId);
+	
+
+	/**
+	 * @param hql
+	 * @param goodIds
+	 * @return
+	 * 查找指定id的商品（未成功）
+	 */
+	public List<TbGoodsDetailInfo> findTbGoodsDetailInfos(String hql, int[] goodIds);
+	
+	/**
+	 * @param goodIds
+	 * 批量删除
+	 */
+	public void deleteTbGoodsDetailInfo(int goodsId);
+	
+	
+	
+	/**
+	 * @param tbGoodsDetailInfo
+	 * 修改商品信息
+	 */
+	public void updateTbGoodsDetailInfo(TbGoodsDetailInfo tbGoodsDetailInfo);
+
+}

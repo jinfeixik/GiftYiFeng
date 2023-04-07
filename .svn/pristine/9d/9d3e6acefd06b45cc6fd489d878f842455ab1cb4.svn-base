@@ -1,0 +1,121 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.struts-tags.com" prefix="s" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+  		<form action="updateGoodsDetailInfo" method="post" enctype="multipart/form-data">
+  	商品类型：	<br>
+  	<input type="hidden" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeId" value="${TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeId }>
+  			对象：<c:choose>
+  				<c:when test="${TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject=='长辈' }">
+  					<input checked="checked"  type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="长辈">长辈
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="晚辈">晚辈
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="朋友">朋友
+  				</c:when>
+  				<c:when test="${TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject=='晚辈' }">
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="长辈">长辈
+  					<input  checked="checked"  type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="晚辈">晚辈
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="朋友">朋友
+  				</c:when>
+  				<c:when test="${TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject=='朋友' }">
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="长辈">长辈
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="晚辈">晚辈
+  					<input checked="checked" type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="朋友">朋友
+  				</c:when>
+  				<c:otherwise>
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="长辈">长辈
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="晚辈">晚辈
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeObject" value="朋友">朋友
+  				</c:otherwise>
+  			</c:choose>
+  			<br>
+  			场合：<c:choose>
+  				<c:when test="${TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation=='纪念日' }">
+  					<input checked="checked" type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="纪念日">纪念日
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="表白">表白
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="生日">生日
+  				</c:when>
+  				<c:when test="${TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation=='表白' }">
+  					<input  type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="纪念日">纪念日
+  					<input checked="checked" type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="表白">表白
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="生日">生日
+  				
+  				</c:when>
+  				<c:when test="${TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation=='生日' }">
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="纪念日">纪念日
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="表白">表白
+  					<input checked="checked" type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="生日">生日
+  				</c:when>
+  				<c:otherwise>
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="纪念日">纪念日
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="表白">表白
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeOccation" value="生日">生日
+  				</c:otherwise>
+  			</c:choose>
+  			<br>
+  			
+  			分类：<c:choose>
+  				<c:when test="${TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify=='浪漫' }">
+  					<input checked="checked"  type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="浪漫">浪漫
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="养生">养生
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="创意">创意
+  				</c:when>
+  				<c:when test="${TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify=='养生' }">
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="浪漫">浪漫
+  					<input checked="checked" type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="养生">养生
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="创意">创意
+  				
+  				</c:when>
+  				<c:when test="${TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify=='创意' }">
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="浪漫">浪漫
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="养生">养生
+  					<input checked="checked"  type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="创意">创意
+  				</c:when>
+  				<c:otherwise>
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="浪漫">浪漫
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="养生">养生
+  					<input type="radio" name="TbGoodsDetailInfo.tbGoodsTypeInfo.goodsTypeClassify" value="创意">创意
+  				</c:otherwise>
+  			</c:choose>
+  			
+  	<br>
+  	
+  		商品名称：<input name="tbGoodsDetailInfo.goodsName" value="${tbGoodsDetailInfo.goodsName }" type="text"/><br>
+		商品价格：<input name="tbGoodsDetailInfo.goodsPrice" value="${tbGoodsDetailInfo.goodsPrice }" type="text"/><br>
+		商品描述：<input name="tbGoodsDetailInfo.goodsDiscreable" value="${tbGoodsDetailInfo.goodsDiscreable }" type="text"/><br>
+		商品参数：<input name="tbGoodsDetailInfo.goodsSpecifiction" value="${tbGoodsDetailInfo.goodsSpecifiction }" type="text"/><br>
+
+		<input type="hidden" name="tbGoodsDetailInfo.goodsId" value="${tbGoodsDetailInfo.goodsId }"  >
+  		<input type="hidden" name="tbGoodsDetailInfo.goodsStatus" value="${tbGoodsDetailInfo.goodsStatus }"  >
+  		<input type="hidden" name="tbGoodsDetailInfo.goodsTypeId" value="${tbGoodsDetailInfo.goodsTypeId}"  >
+  
+  	<br>
+  	
+  	<c:forEach items="${tbGoodsDetailInfo.tbGoodsStyleInfo }" var="style" varStatus="status">
+  	样式${status.index }:<br>
+  		商品库存:	<input name="tbGoodsStyleInfo[${status.index }].goodsStyleStock" value="${style.goodsStyleStock}" type="text"/><br>
+  		商品样式:	<input name="tbGoodsStyleInfo[${status.index }].goodsStyleName" value="${style.goodsStyleName}" type="text"/><br>
+  				<input name="tbGoodsStyleInfo[${status.index }].goodsStyleId" value="${style.goodsStyleId}" type="hidden"><br>
+  
+  		
+  		
+  		商品图片:	<input name="myFile" type="file"><br>
+  	
+  	
+  	</c:forEach>
+  	
+  	
+  		<input type="submit" value="提交">
+  	</form>
+    
+</body>
+</html>

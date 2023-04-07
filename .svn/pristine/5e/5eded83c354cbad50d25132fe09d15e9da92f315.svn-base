@@ -1,0 +1,62 @@
+package com.qst.dao.impl;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
+import com.qst.dao.TbOrderInfoDao;
+import com.qst.entity.TbOrderInfo;
+
+/**
+ * @author 杨惠(yanghui)
+ * @date 2019/8/9 17:51
+ * @version v1.0
+ */
+@Repository
+public class TbOrderInfoDaoImpl extends HibernateDaoSupport implements TbOrderInfoDao {
+
+	@Resource
+	public void setSF(SessionFactory sessionFactory){
+		super.setSessionFactory(sessionFactory);
+	}
+	@Override
+	public void add(TbOrderInfo tbOrderInfo) {
+		getHibernateTemplate().save(tbOrderInfo);
+
+	}
+	
+	@Override
+	public String createOrderNum(){
+		int r1=(int)(Math.random()*(10));//产生2个0-9的随机数
+		int r2=(int)(Math.random()*(10));
+		long now = System.currentTimeMillis();//一个13位的时间戳
+		String paymentID =String.valueOf(r1)+String.valueOf(r2)+String.valueOf(now);// 订单ID
+		return paymentID;
+	}
+	
+	@Override
+	public String createOrderTime() {
+		Date day=new Date();    
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		return df.format(day);
+	}
+	@Override
+	public List<TbOrderInfo> findAllOrderInfo(int userId) {
+		String hql="from TbOrderInfo where userId = ?";
+		List<TbOrderInfo> orders = getHibernateTemplate().find(hql, userId);
+		/*for(TbOrderInfo order:orders){
+			System.out.println("每个订单金额："+order.getOrderAmount());
+		}*/
+		return orders;
+	}
+	@Override
+	public void addOrderInfo(TbOrderInfo tbOrderInfo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

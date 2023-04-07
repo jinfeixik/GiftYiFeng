@@ -1,0 +1,123 @@
+package com.qst.action;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.qst.dao.TbUserInfoDao;
+import com.qst.entity.TbUserCommentInfo;
+import com.qst.entity.TbUserInfo;
+import com.qst.service.TbUserCommentInfoService;
+import com.qst.service.TbUserInfoService;
+
+/**
+ * 
+ * @author 李阳liyang
+ * @date 2019-8-12下午2:22:21
+ * @version v1.0
+ */
+@Repository
+public class AnalysisDataAction {
+	@Autowired
+	private   TbUserCommentInfoService  tbUserCommentInfoService;
+	
+	
+	private TbUserCommentInfo  tbUserCommentInfo;
+	
+
+	private TbUserInfo tbUserInfo;
+	
+	private List<TbUserCommentInfo> tbUserCommentInfos = new ArrayList<TbUserCommentInfo>();
+	
+	private List<TbUserInfo> tbUserInfos = new ArrayList<TbUserInfo>();
+	
+	private  int num[];
+	
+	private int   goodsId=5;
+	
+	//分析评论星级
+	public String AnalysisCommentStar(){
+		tbUserCommentInfos=tbUserCommentInfoService.findGoodsTbUserCommentInfos(goodsId);
+		
+		int commentStar[];
+		num=new int [5];
+		commentStar=new int[tbUserCommentInfos.size()];
+		
+		for(int i=0;i<tbUserCommentInfos.size();i++){
+			commentStar[i]=tbUserCommentInfos.get(i).getUserCommentStar();
+		}
+		
+		for(int j=0;j<commentStar.length;j++){
+			if(commentStar[j]==1){
+			num[0]++;
+			}else if(commentStar[j]==2){
+		    num[1]++;
+			}else if(commentStar[j]==3){
+		    num[2]++;
+			}else if(commentStar[j]==4){
+			num[3]++;
+			}else if(commentStar[j]==5){
+			num[4]++;
+			}
+		}
+		System.out.println("一星"+num[0]+"二星"+num[1]+"三星"+num[2]+"四星"+num[3]+"五星"+num[4]);
+		return "success";
+	}
+	//分析会员等级
+	public String AnalysisUserLevel(){
+		//tbUserInfos=tbUserInfoService.
+		
+	   return "success";
+	}
+	
+	
+	
+	public TbUserCommentInfoService getTbUserCommentInfoService() {
+		return tbUserCommentInfoService;
+	}
+	public void setTbUserCommentInfoService(
+			TbUserCommentInfoService tbUserCommentInfoService) {
+		this.tbUserCommentInfoService = tbUserCommentInfoService;
+	}
+	
+	public TbUserCommentInfo getTbUserCommentInfo() {
+		return tbUserCommentInfo;
+	}
+	public void setTbUserCommentInfo(TbUserCommentInfo tbUserCommentInfo) {
+		this.tbUserCommentInfo = tbUserCommentInfo;
+	}
+	
+	public TbUserInfo getTbUserInfo() {
+		return tbUserInfo;
+	}
+	public void setTbUserInfo(TbUserInfo tbUserInfo) {
+		this.tbUserInfo = tbUserInfo;
+	}
+	
+	public List<TbUserCommentInfo> getTbUserCommentInfos() {
+		return tbUserCommentInfos;
+	}
+	public void setTbUserCommentInfos(List<TbUserCommentInfo> tbUserCommentInfos) {
+		this.tbUserCommentInfos = tbUserCommentInfos;
+	}
+	
+	public int[] getNum() {
+		return num;
+	}
+	public void setNum(int[] num) {
+		this.num = num;
+	}
+	
+	public int getGoodsId() {
+		return goodsId;
+	}
+	public void setGoodsId(int goodsId) {
+		this.goodsId = goodsId;
+	}
+	
+	
+}

@@ -1,0 +1,80 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>支付宝电脑网站支付</title>
+
+</head>
+<body>
+	<h1>订单支付</h1>
+	 订单提交成功<br/>
+	 请尽快完成支付<br/>
+	<div id="main">
+		<form name=alipayment action=alipay.trade.page.pay.jsp method=post>
+			<div id="body1" class="show" name="divcontent">
+			
+					订单号 ：<input id="WIDout_trade_no" name="WIDout_trade_no"  value="2019812000002"/><br>
+					买家姓名：<input type="text" readonly="readonly" value=${tbUserAddressInfo.addressReciverName}><br>
+					收货号码：<input type="text" readonly="readonly" value=${tbUserAddressInfo.addressReciverPhoneNumber}><br>
+					收货地址：<input type="text" readonly="readonly"  value=${tbUserAddressInfo.addressReciverAddress}><br>
+					详细地址：<input type="text" readonly="readonly" value=${tbUserAddressInfo.addressReciverDetailAddress} ><br>
+					配送方式:
+	                    <c:choose>
+	                    <c:when test="${tbOrderInfo.orderDistrabutionMethod ==0 }">同城配送</c:when>
+	                    <c:otherwise>中通</c:otherwise>
+	                    </c:choose>
+	                    </br>			
+						<input id="WIDsubject" name="WIDsubject" value="测试" /><br>
+					<!-- 应付金额:<input type="text" readonly="readonly"  id="WIDtotal_amount"  name="WIDtotal_amount"  value=${allAmount}></br> -->
+		应付金额:<input type="text"  id="WIDtotal_amount"  name="WIDtotal_amount" value=123></br> 
+		
+				
+					商品描述：<input id="WIDbody" name="WIDbody" /><br>				
+			        <button  type="submit">付 款</button><br>
+		
+		</form>
+		
+		
+	
+	</div>
+</body>
+<script language="javascript">
+	/*var tabs = document.getElementsByName('tab');
+	var contents = document.getElementsByName('divcontent');
+	
+	(function changeTab(tab) {
+	    for(var i = 0, len = tabs.length; i < len; i++) {
+	        tabs[i].onmouseover = showTab;
+	    }
+	})();
+	
+	function showTab() {
+	    for(var i = 0, len = tabs.length; i < len; i++) {
+	        if(tabs[i] === this) {
+	            tabs[i].className = 'selected';
+	            contents[i].className = 'show';
+	        } else {
+	            tabs[i].className = '';
+	            contents[i].className = 'tab-content';
+	        }
+	    }
+	}*/
+	
+	/*function GetDateNow() {
+		/*var vNow = new Date();
+		var sNow = "";
+		sNow += String(vNow.getFullYear());
+		sNow += String(vNow.getMonth() + 1);
+		sNow += String(vNow.getDate());
+		sNow += String(vNow.getHours());
+		sNow += String(vNow.getMinutes());
+		sNow += String(vNow.getSeconds());
+		sNow += String(vNow.getMilliseconds());
+		document.getElementById("WIDout_trade_no").value =  sNow;
+		document.getElementById("WIDsubject").value = "测试";
+		document.getElementById("WIDtotal_amount").value = "0.01";
+	}
+	GetDateNow();*/
+</script>
+</html>

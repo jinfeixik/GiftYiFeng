@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 要记得写注释 -->
+	<package name="front" namespace="/" extends="json-default">
+
+		<!-- 加入购物车yh -->
+		<action name="addShopping" class="addShoppingCarAction" method="addShoppingCar">
+			<!-- <result name="success" > /shoppingCar.jsp </result> -->
+			<result name="success" type="redirectAction">
+				findShoppingCarInfo
+			</result>
+		</action>
+
+		<!-- 显示购物车列表信息 -->
+		<action name="findShoppingCarInfo" class="addShoppingCarAction"
+			method="findAllShoppingCarInfo">
+			<result name="success">
+				/shoppingCarList.jsp
+			</result>
+		</action>
+
+		<!-- 删除购物车信息 -->
+		<action name="deleteShoppingCar" class="addShoppingCarAction"
+			method="deleteShoppingCarInfo">
+			<!-- <result name="success"> /shoppingCarList.jsp </result> -->
+			<result name="success" type="redirectAction">
+				findShoppingCarInfo
+			</result>
+		</action>
+
+		<!-- 添加购物车商品数量 -->
+		<action name="addItemNumber" class="addShoppingCarAction"
+			method="addItemNumber">
+			<result name="success" type="redirectAction">
+				findShoppingCarInfo
+			</result>
+		</action>
+
+		<!-- 删除购物车商品数量 -->
+		<action name="delItemNumber" class="addShoppingCarAction"
+			method="deleteItemNumber">
+			<result name="success" type="redirectAction">
+				findShoppingCarInfo
+			</result>
+		</action>
+
+		<!-- 填写订单页 -->
+		<action name="writeOrder" class="orderInfoAction" method="writeOrderInfo">
+			<result name="success">
+				/orderWrite.jsp
+			</result>
+		</action>
+
+		<!-- 支付订单 -->
+		<action name="payOrder" class="orderInfoAction" method="payOrder">
+			<result name="success">
+				/payOrder.jsp
+			</result>
+		</action>
+
+		<!-- 我的订单 -->
+		<action name="myOrder" class="orderInfoAction" method="myOrder">
+			<result name="success">
+				/myOrder.jsp
+			</result>
+		</action>
+
+		<!-- 添加地址 -->
+		<action name="addAddress" class="addAddressAction" method="addAddress">
+			<result name="success">
+				/addAddress.jsp
+			</result>
+		</action>
+
+		<!-- 删除地址 -->
+		<action name="delAddress" class="addAddressAction" method="deleteAddress">
+			<result name="success" type="redirectAction">
+				writeOrder
+			</result>
+		</action>
+
+		<!-- 修改地址 -->
+		<action name="updateAddress" class="addAddressAction" method="toUpdate">
+			<result name="success">
+				/updateAddress.jsp
+			</result>
+		</action>
+
+       <!--  修改地址 -->
+		<action name="toUpdateAddress" class="addAddressAction" method="updateAddress">
+			<result name="success" type="redirectAction">
+				writeOrder
+			</result>
+		</action>
+
+        <!-- 添加收货人地址 -->
+		<action name="addReciverAddress" class="addAddressAction"
+			method="addReciverAddress">
+			<result name="success" type="redirectAction">
+				writeOrder
+			</result>
+		</action>
+	</package>
+
+
+	<package name="manager" namespace="/" extends="struts-default">
+
+
+		<!-- 添加商品 -->
+		<action name="addGoods" class="addGoodsAction" method="addGoods">
+			<result name="success">
+				/index.jsp
+			</result>
+			<result name="addGoodsError">
+				/YYTest.jsp
+			</result>
+		</action>
+
+		<!-- 删除多个商品 -->
+		<action name="delectGoods" class="managerGoodsAction" method="deleteGoods">
+			<result name="deleteGoods">
+				/index.jsp
+			</result>
+		</action>
+
+		<!-- 删除单个商品 -->
+		<action name="deleteGoodsOne" class="managerGoodsAction"
+			method="deleteGoodsOne">
+			<result name="deleteGoodsOne">
+				/index.jsp
+			</result>
+		</action>
+
+		<!-- 商品列表（未分页） -->
+		<action name="findGoods" class="managerGoodsAction" method="findGoods">
+			<result name="findGoods">
+				/admin-goods-list.jsp
+			</result>
+		</action>
+
+		<!-- 回显商品信息 -->
+			<action name="updateInGoodsInfo" class="updateGoodsInfo"
+				method="updateInGoodsInfo">
+
+				<result name="updateInGoodsInfo">
+					/YYUpdate.jsp
+				</result>
+			</action>
+			<!-- 修改商品信息 -->
+				<action name="updateGoodsDetailInfo" class="updateGoodsInfo"
+					method="updateGoodsDetailInfo">
+
+					<result name="updateGoodsDetail">
+						/index.jsp
+					</result>
+				</action>
+
+	</package>
+
+
+	<package name="a" namespace="/" extends="json-default">
+		<action name="hello" class="helloAction" method="hello">
+			<result name="success">
+				/index.jsp
+			</result>
+		</action>
+		<!-- 发送邮件 -->
+		<action name="email" class="sendEmailAction" method="email">
+			<result name="errorAddress">
+				/index.jsp;
+			</result>
+			<result name="errorMessage">
+				/index.jsp;
+			</result>
+			<result name="success">
+				/error.jsp
+			</result>
+		</action>
+		<!-- 登录滑块验证 -->
+		<action name="login" class="loginAction" method="code">
+			<result name="success" type="redirectAction">
+				userlogin
+			</result>
+			<result name="error" type="redirectAction">
+				loginError
+			</result>
+		</action>
+		<action name="userlogin" class="loginAction" method="userLogin">
+			<result name="success">
+				/index.jsp
+			</result>
+			<result name="error" type="redirectAction">
+				loginError
+			</result>
+		</action>
+		<action name="loginError" class="loginAction" method="userLoginError">
+			<result name="success">
+				/login.jsp
+			</result>
+		</action>
+		<action name="register" class="registerAction" method="ifUserRegister">
+			<result name="success" type="redirectAction">
+				registerUser
+			</result>
+
+			<result name="error">
+				/register.jsp
+			</result>
+		</action>
+		<action name="registerUser" class="registerAction" method="userRegister">
+			<result name="success">
+
+				/login.jsp
+			</result>
+		</action>
+
+		<!--忘记密码 查找是否有这个手机号或邮箱号 -->
+		<action name="findUserInfo" class="loginAction" method="findUserInfo">
+			<result name="success" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">flag</param>
+			</result>
+		</action>
+		<!-- 发送手机验证码 (用的ajax，不会到error页面) -->
+		<action name="phoneCode" class="loginAction" method="phoneCode">
+			<result name="success" type="json">
+				<param name="root">phoneCode</param>
+			</result>
+		</action>
+
+		<!-- 判断手机验证码正确,重置密码 -->
+		<action name="updateFogetPassword" class="loginAction" method="updateFogetPassword">
+
+		</action>
+
+		<action name="updateUserInfo" class="userInfoAction" method="updateUserInfo">
+			<result name="success">
+				/UserInfo.jsp
+			</result>
+		</action>
+		<action name="updatePassword" class="userInfoAction" method="updatePassword">
+			<result name="success">
+				/UpdatePassword.jsp
+			</result>
+		</action>
+
+	</package>
+	
+	<package name="show" namespace="/" extends="struts-default">
+	<!-- 分类展示商品 -->
+	<action name="findGoodsType" class="findGoodsTypeAction" method="findGoodsType">
+			<result name="success">
+				/error.jsp
+			</result>
+	</action>
+	</package>
+	
+	<package name="comment" namespace="/" extends="struts-default">
+	
+	<!-- 添加评论 -->
+	<action name="addUserComment" class="AddUserCommentAction" method="AddUserComment">
+			<result name="success">
+				/error.jsp
+			</result>
+	</action>
+	
+	
+	<!-- 删除评论 -->
+	<action name="deleteUserComment" class="AddUserCommentAction" method="DeleteUserComment">
+			<result name="success">
+				/error.jsp
+			</result>
+	</action>
+	
+	<!-- 我的评论 -->
+	<action name="findUserCommentByUserId" class="AddUserCommentAction" method="FindUserCommentByUserId">
+			<result name="success">
+				/error.jsp
+			</result>
+	</action>
+	
+	<!-- 商品评论 -->
+	<action name="findUserCommentByGoodsId" class="AddUserCommentAction" method="FindUserCommentByGoodsId">
+			<result name="success">
+				/error.jsp
+			</result>
+	</action>
+	
+	<!-- 好评率 -->
+	<action name="findPercentUserCommentStar" class="AddUserCommentAction" method="FindPercentUserCommentStar">
+			<result name="success">
+				/error.jsp
+			</result>
+	</action>
+	
+	
+	
+	</package>
+
+</struts>

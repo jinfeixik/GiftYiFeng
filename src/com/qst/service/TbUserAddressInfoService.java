@@ -1,0 +1,22 @@
+package com.qst.service;
+
+import java.util.List;
+
+import com.qst.entity.TbUserAddressInfo;
+
+public interface TbUserAddressInfoService {
+	public void addAddress(TbUserAddressInfo tbUserAddressInfo);
+	
+	public List<TbUserAddressInfo> findUserId(int userId);
+	
+	public void delAddress(int addressId) ;
+	
+	public void updateAddress(TbUserAddressInfo tbUserAddressInfo);
+	
+	public TbUserAddressInfo findAddressByAddressId(int addressId);
+	
+	public TbUserAddressInfo findAddressDefault();
+	
+	public void updateDefault(final int addressId, final int status);
+
+}

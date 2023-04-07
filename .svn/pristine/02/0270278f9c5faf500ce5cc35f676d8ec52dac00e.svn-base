@@ -1,0 +1,17 @@
+package com.qst.service;
+
+
+import java.util.List;
+
+import com.qst.entity.TbOrderInfo;
+
+public interface TbOrderInfoService {
+
+	public void add(TbOrderInfo tbOrderInfo);
+	
+	public String createOrderNum();
+	
+	public String createOrderTime() ;
+	
+	public List<TbOrderInfo> findAllOrderInfo(int userId);
+}

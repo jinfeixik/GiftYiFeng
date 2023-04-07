@@ -1,0 +1,115 @@
+package com.qst.action;
+
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import com.qst.entity.TbMyCollect;
+import com.qst.entity.TbUserInfo;
+import com.qst.service.TbMyCollectService;
+import com.qst.vo.MyCollectVO;
+
+
+
+@Component
+public class MyCollectAction extends BaseAction {
+    
+	@Autowired
+	private  TbMyCollectService tbMyCollectService;
+	
+
+	private  TbMyCollect tbMyCollect = new TbMyCollect();
+	
+	private  List<TbMyCollect> collects;
+	
+	private List<MyCollectVO> myCollectVOs;
+	
+	private int myCollectId;
+	
+	//点击商品的收藏按钮获取商品id
+	private int goodsId = 88;
+	
+	public String addMyCollect(){
+		TbUserInfo user = (TbUserInfo) session.get("user");
+		tbMyCollect.setUserId(user.getUserId());
+		System.out.println("用户id"+user.getUserId());
+		//System.out.println("进入我的收藏");
+		/*tbMyCollect.setUserId(1);*/
+		//System.out.println("dengjiyonghu");
+		tbMyCollect.setGoodsId(goodsId);
+		tbMyCollectService.addMyCollect(tbMyCollect);
+		
+		return "success";
+	}
+	
+	public String showCollect(){
+		TbUserInfo user = (TbUserInfo) session.get("user");
+		System.out.println("用户id"+user.getUserId());
+		myCollectVOs = tbMyCollectService.findMyCollect(user.getUserId());
+		/*for(MyCollectVO myCollectVO:myCollectVOs){
+			System.out.println("信息");
+			 System.out.println(myCollectVO.getGoodsName());
+			 System.out.println(myCollectVO.getGoodsImagePath());
+		}*/
+       
+		return "success";
+	}
+	
+	public String deleteCollect(){
+		System.out.println("删除成功"+myCollectId);
+		tbMyCollectService.delMyCollect(myCollectId);
+		
+		return "success";
+	}
+
+	public List<MyCollectVO> getMyCollectVOs() {
+		return myCollectVOs;
+	}
+
+	public void setMyCollectVOs(List<MyCollectVO> myCollectVOs) {
+		this.myCollectVOs = myCollectVOs;
+	}
+
+	public TbMyCollectService getTbMyCollectService() {
+		return tbMyCollectService;
+	}
+
+	public void setTbMyCollectService(TbMyCollectService tbMyCollectService) {
+		this.tbMyCollectService = tbMyCollectService;
+	}
+
+	public TbMyCollect getTbMyCollect() {
+		return tbMyCollect;
+	}
+
+	public void setTbMyCollect(TbMyCollect tbMyCollect) {
+		this.tbMyCollect = tbMyCollect;
+	}
+
+	public int getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(int goodsId) {
+		this.goodsId = goodsId;
+	}
+
+	public List<TbMyCollect> getCollects() {
+		return collects;
+	}
+
+	public void setCollects(List<TbMyCollect> collects) {
+		this.collects = collects;
+	}
+
+	public int getMyCollectId() {
+		return myCollectId;
+	}
+
+	public void setMyCollectId(int myCollectId) {
+		this.myCollectId = myCollectId;
+	}
+	
+	
+	
+}

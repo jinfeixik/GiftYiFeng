@@ -1,0 +1,27 @@
+package com.qst.dao.impl;
+
+import javax.annotation.Resource;
+
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
+
+import com.qst.dao.TbStyleDao;
+import com.qst.entity.TbGoodsStyleInfo;
+
+@Repository
+public class TbStyleDaoImpl extends HibernateDaoSupport implements TbStyleDao{
+	
+	@Resource
+	public void setSF(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+	
+	public void addGoods(TbGoodsStyleInfo tbGoodsStyleInfo) {
+		System.out.println("添加样式" +tbGoodsStyleInfo.toString());
+		getHibernateTemplate().save(tbGoodsStyleInfo);
+		
+		
+	}
+
+}

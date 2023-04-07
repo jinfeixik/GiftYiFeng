@@ -1,0 +1,45 @@
+package com.qst.util;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import com.qst.action.BaseAction;
+
+/**
+ * @author 赵海庭（zhaohaiting）
+ * @date 2019-8-7下午8:14:12
+ * @version v1.0
+ */
+@Repository
+public class Phone extends BaseAction {
+	
+/**
+ * @param args
+ * 发送一个手机验证码
+ */
+public void sendCode(String phoneNumber){
+	  
+	   Code code=new Code();
+	 
+	   String buffer=code.getNumber(4);
+	    System.out.println("验证码为："+buffer);
+	
+		/*try {
+			SMSCode.sendCode(phoneNumber,buffer.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		HttpSession session = ServletActionContext.getRequest().getSession();
+	   session.setAttribute("phoneCode", buffer);		
+	   
+		 //session.put("phoneCode",buffers);
+		
+		
+		
+
+}
+}

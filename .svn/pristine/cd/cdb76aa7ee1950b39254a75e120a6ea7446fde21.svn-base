@@ -1,0 +1,62 @@
+package com.qst.dao.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
+
+import com.qst.dao.TbUserAddressInfoDao;
+import com.qst.entity.TbUserAddressInfo;
+
+@Repository
+public class TbUserAddressInfoDaoImpl extends HibernateDaoSupport implements TbUserAddressInfoDao{
+	
+	@Resource
+	public void setSF(SessionFactory sessionFactory){
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Override
+	public void addAddress(TbUserAddressInfo tbUserAddressInfo) {
+		getHibernateTemplate().save(tbUserAddressInfo);
+		
+	}
+
+	@Override
+	public List<TbUserAddressInfo> findUserId(int userId) {
+		List<TbUserAddressInfo> userAddresss = new ArrayList<TbUserAddressInfo>();
+		String hql="from TbUserAddressInfo where userId=? order by addressId desc";
+		userAddresss =  getHibernateTemplate().find(hql, userId);
+		/*for(TbUserAddressInfo userAddress:userAddresss){
+			System.out.println("默认地址值:"+userAddress.getAddressDefaultAddress());
+		}*/
+		return userAddresss;
+	}
+
+	@Override
+	public void delAddress(int addressId) {
+	TbUserAddressInfo userAddressInfo = (TbUserAddressInfo) getHibernateTemplate().get(TbUserAddressInfo.class, addressId);
+		getHibernateTemplate().delete(userAddressInfo);
+	}
+
+	@Override
+	public void updateAddress(TbUserAddressInfo tbUserAddressInfo) {
+		getHibernateTemplate().update(tbUserAddressInfo);
+		
+		
+	}
+
+	@Override
+	public TbUserAddressInfo findAddressByAddressId(int addressId) {
+		String hql="from TbUserAddressInfo where addressId=?";
+		TbUserAddressInfo tbUserAddressInfo = (TbUserAddressInfo) getHibernateTemplate().get(TbUserAddressInfo.class, addressId);
+		return tbUserAddressInfo;
+	}
+
+	
+}

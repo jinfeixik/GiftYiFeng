@@ -1,0 +1,98 @@
+package com.qst.entity;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/**
+ * TbGoodsTypeInfo entity. @author MyEclipse Persistence Tools
+ */
+@Component
+public class TbGoodsTypeInfo implements java.io.Serializable {
+
+	// Fields
+
+
+	private Integer goodsTypeId;
+	private String goodsTypeOccation;
+	private String goodsTypePrice;
+	private String goodsTypeObject;
+	private String goodsTypeClassify;
+	
+	private TbGoodsDetailInfo tbGoodsDetailInfo;
+	
+	// Constructors
+
+	/** default constructor */
+	public TbGoodsTypeInfo() {
+	}
+
+	/** full constructor */
+	public TbGoodsTypeInfo(String goodsTypeOccation, String goodsTypePrice,
+			String goodsTypeObject, String goodsTypeClassify) {
+		this.goodsTypeOccation = goodsTypeOccation;
+		this.goodsTypePrice = goodsTypePrice;
+		this.goodsTypeObject = goodsTypeObject;
+		this.goodsTypeClassify = goodsTypeClassify;
+	}
+
+	// Property accessors
+
+	public Integer getGoodsTypeId() {
+		return this.goodsTypeId;
+	}
+
+	public void setGoodsTypeId(Integer goodsTypeId) {
+		this.goodsTypeId = goodsTypeId;
+	}
+
+	public String getGoodsTypeOccation() {
+		return this.goodsTypeOccation;
+	}
+
+	public void setGoodsTypeOccation(String goodsTypeOccation) {
+		this.goodsTypeOccation = goodsTypeOccation;
+	}
+
+	public String getGoodsTypePrice() {
+		return this.goodsTypePrice;
+	}
+
+	public void setGoodsTypePrice(String goodsTypePrice) {
+		this.goodsTypePrice = goodsTypePrice;
+	}
+
+	public String getGoodsTypeObject() {
+		return this.goodsTypeObject;
+	}
+
+	public void setGoodsTypeObject(String goodsTypeObject) {
+		this.goodsTypeObject = goodsTypeObject;
+	}
+
+	public String getGoodsTypeClassify() {
+		return this.goodsTypeClassify;
+	}
+
+	public void setGoodsTypeClassify(String goodsTypeClassify) {
+		this.goodsTypeClassify = goodsTypeClassify;
+	}
+
+	@Override
+	public String toString() {
+		return "TbGoodsTypeInfo [goodsTypeId=" + goodsTypeId
+				+ ", goodsTypeOccation=" + goodsTypeOccation
+				+ ", goodsTypePrice=" + goodsTypePrice + ", goodsTypeObject="
+				+ goodsTypeObject + ", goodsTypeClassify=" + goodsTypeClassify
+				+ "]";
+	}
+
+	public TbGoodsDetailInfo getTbGoodsDetailInfo() {
+		return tbGoodsDetailInfo;
+	}
+
+	public void setTbGoodsDetailInfo(TbGoodsDetailInfo tbGoodsDetailInfo) {
+		this.tbGoodsDetailInfo = tbGoodsDetailInfo;
+	}
+
+
+}

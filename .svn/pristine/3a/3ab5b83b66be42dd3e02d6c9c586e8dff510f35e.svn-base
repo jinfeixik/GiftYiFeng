@@ -1,0 +1,121 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- 个人信息页面 -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link href="css/UserInfo.css" rel="stylesheet">
+
+</head>
+
+<body>
+	<div class="userInfomenu">
+		<ul>
+			<li><a href="" class="">我的订单</a>
+			</li>
+			<li><a href="" class="">评价晒单</a>
+			</li>
+			<li></li>
+			<li class="m-t-15"><a href="" class="current">个人信息</a>
+			</li>
+			<li><a href="UpdatePassword.jsp" class="">修改密码</a>
+			</li>
+			<li><a href="" class="">我的地址簿</a>
+			</li>
+			<li></li>
+			<li class="m-t-15"><a href="" class="">我的代金劵</a>
+			</li>
+			<li><a href="" class="">我的积分</a>
+			</li>
+			<li></li>
+			<li class="m-t-15"><a href="" class="">我的收藏</a>
+			</li>
+			<li><a href="" class="">我的提问</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="userInfo">
+		<div class="">
+			<span>个人信息</span>
+		</div>
+		<hr>
+		<div class="">
+			<ul class="">
+				<li class="">
+					<div class="">
+						<p class="">
+							<span class="">您的会员等级<i class=""></i><em class="f-666">普通会员</em>
+							</span>
+						</p>
+					</div>
+			</ul>
+			<div class="">
+				<form name="updateUserInfo" action="updateUserInfo" method="post">
+					<div class="info_li">
+						<span class="title">用户名</span>
+						<div class="content">
+							<input type="text" name="tbUserInfo.userName"
+								value='${user.getUserName()}' class="input" />
+						</div>
+					</div>
+					
+					<div class="info_li">
+						<span class="title">性别</span>
+						<div class="content">
+						<c:if test="${user.getUserSex()==0}">
+ 	 	                 <input type="radio" class="sex" value="1" name="tbUserInfo.userSex">男  <input type="radio" class="sex" value="2" name="tbUserInfo.userSex">女
+		                </c:if> 
+		                <c:if test="${user.getUserSex()==1}">
+		                  <input type="radio" checked="checked" class="Sex" value="1" name="tbUserInfo.userSex">男  <input type="radio"class="Sex" value="2" name="tbUserInfo.userSex">女
+		                </c:if> 
+		                 <c:if test="${user.getUserSex()==2}">
+		                <input type="radio" class="sex" value="1" name="tbUserInfo.userSex">男 <input type="radio" checked="checked"class="Sex" value="2" name="tbUserInfo.userSex">女
+		                 </c:if> 
+						</div>
+					</div>
+					
+					<div class="info_li">
+						<span class="title">手机号</span>
+						<div class="content">
+							<input type="text" name="tbUserInfo.userPhoneNumber"
+								value='${user.getUserPhoneNumber()}' class="input" />
+						</div>
+					</div>
+					<div class="info_li">
+						<span class="title">邮箱</span>
+						<div class="content">
+							<input type="text" name="tbUserInfo.userEmail"
+								value='${user.getUserEmail()}' class="input" />
+						</div>
+					</div>
+					<div class="info_li">
+						<span class="title">生日</span>
+						<div class="content">
+							<input type="text" name="tbUserInfo.userBirthday"
+								class="demo-input" placeholder="请选择日期" id="end" 	value='${user.getUserBirthday()}' >
+						</div>
+					</div>
+					
+
+					<div class="">
+						<div class="title">
+							<input type="submit" class="submit" value="提交修改">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+<script src="js/laydate.js"></script>
+<!-- 改成你的路径 -->
+<script>
+	//执行一个laydate实例
+	laydate.render({
+		elem : '#end' //指定元素
+	});
+</script>
+</html>

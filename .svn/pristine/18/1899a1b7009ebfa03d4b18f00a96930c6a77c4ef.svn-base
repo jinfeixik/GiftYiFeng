@@ -1,0 +1,83 @@
+package com.qst.action;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.qst.entity.TbUserInfo;
+import com.qst.service.TbUserInfoService;
+
+/**
+ * @author 赵海庭（zhaohaiting）
+ * @date 2019-8-8下午4:02:09
+ * @version v1.0 用户个人信息
+ */
+@Repository 
+public class UserInfoAction extends BaseAction {
+
+	@Autowired
+	private TbUserInfoService tbUserInfoService;
+
+	@Autowired
+	private TbUserInfo tbUserInfo;
+    
+	private String password2;
+
+
+/**
+ *修改个人信息 
+ * */
+	public String updateUserInfo() {
+		
+
+		TbUserInfo user = (TbUserInfo) session.get("user");
+		
+		tbUserInfo.setUserId(user.getUserId());
+		tbUserInfo.setUserPassword(user.getUserPassword());
+		tbUserInfo.setUserLevel(user.getUserLevel());
+		
+		tbUserInfoService.updateTbUserInfo(tbUserInfo);
+		
+		session.put("user",tbUserInfo);
+		
+		return "success";
+	}
+/**
+ * 
+ * 修改个人密码
+ * */
+	public String updatePassword(){
+			    
+	    tbUserInfo= (TbUserInfo)session.get("user");
+	    
+		tbUserInfo.setUserPassword(password2);
+		
+		tbUserInfoService.updateTbUserInfo(tbUserInfo);
+	
+		session.put("user",tbUserInfo);
+		
+
+		
+		return "success";
+	}
+	public TbUserInfo getTbUserInfo() {
+		return tbUserInfo;
+	}
+
+	public void setTbUserInfo(TbUserInfo tbUserInfo) {
+		this.tbUserInfo = tbUserInfo;
+	}
+	public TbUserInfoService getTbUserInfoService() {
+		return tbUserInfoService;
+	}
+
+	public void setTbUserInfoService(TbUserInfoService tbUserInfoService) {
+		this.tbUserInfoService = tbUserInfoService;
+	}
+	public String getPassword2() {
+		return password2;
+	}
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+	}
+
+}

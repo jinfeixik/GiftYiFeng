@@ -1,0 +1,41 @@
+package com.qst.dao.impl;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
+
+import com.qst.dao.TbStyleDao;
+import com.qst.entity.TbGoodsStyleInfo;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
+@Repository
+public class TbStyleDaoImpl extends HibernateDaoSupport implements TbStyleDao{
+	
+	@Resource
+	public void setSF(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+	
+	public TbGoodsStyleInfo findStyle(int styleId) {
+		TbGoodsStyleInfo style = (TbGoodsStyleInfo) getHibernateTemplate().get(TbGoodsStyleInfo.class, styleId);
+		return style;
+	}
+	
+	public void addStyle(TbGoodsStyleInfo tbGoodsStyleInfo) {
+		System.out.println("添加样式" +tbGoodsStyleInfo.toString());
+		getHibernateTemplate().save(tbGoodsStyleInfo);
+		
+		
+	}
+
+	
+	public void deleteStyle(TbGoodsStyleInfo tbGoodsStyleInfo) {
+		getHibernateTemplate().delete(tbGoodsStyleInfo);
+		
+	}
+
+}

@@ -1,0 +1,156 @@
+package com.qst.service.impl;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.persistence.Entity;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Service;
+
+import com.qst.dao.TbOrderInfoDao;
+import com.qst.dao.TbShoppingCarDao;
+import com.qst.entity.TbGoodsDetailInfo;
+import com.qst.entity.TbGoodsImageInfo;
+import com.qst.entity.TbGoodsStyleInfo;
+import com.qst.entity.TbOrderInfo;
+import com.qst.service.TbOrderInfoService;
+import com.qst.util.BeanUtil;
+import com.qst.vo.MyOrderVO;
+
+/**
+ * @author 杨惠(yanghui)
+ * @date 2019/8/9 17:17
+ * @version v1.0
+ */
+@Service
+public class TbOrderInfoServiceImpl extends HibernateDaoSupport implements TbOrderInfoService {
+	
+	@Resource
+	public void setSF(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+	
+	@Autowired
+	private TbOrderInfoDao tbOrderInfoDao;
+	
+	@Autowired
+	private TbShoppingCarDao tbShoppingCarDao;
+
+	@Override
+	public void add(TbOrderInfo tbOrderInfo) {
+		tbOrderInfoDao.add(tbOrderInfo);
+
+	}
+
+	@Override
+	public String createOrderNum() {
+		return tbOrderInfoDao.createOrderNum();
+	}
+
+	@Override
+	public String createOrderTime() {
+		return tbOrderInfoDao.createOrderTime();
+	}
+
+	@Override
+	public   List<MyOrderVO>  findAllOrderInfo(int userId) {
+		 List<TbOrderInfo> orders = 	tbOrderInfoDao.findAllOrderInfo2(userId);
+		 List<MyOrderVO> myOrderVOs = BeanUtil.copyList(orders, MyOrderVO.class);
+		 int index= 0;
+		 for(MyOrderVO message:myOrderVOs){
+			 List<TbGoodsStyleInfo> styles = new ArrayList<TbGoodsStyleInfo>(orders.get(index).getTbGoodsStyleInfos());
+			 Map<String, Double> map = new HashMap<String, Double>();
+			 List<String> img = new ArrayList<String>();
+			 for(TbGoodsStyleInfo style: styles) {
+				 TbGoodsDetailInfo detail = style.getTbGoodsDetailInfo();
+				 //上传商品名和价格
+				 map.put(detail.getGoodsName(), detail.getGoodsPrice());
+				 //上传商品图片
+				 TbGoodsImageInfo imageInfo =  style.getTbGoodsImageInfo();
+				img.add(imageInfo.getGoodsImagePath());
+			 }
+			 message.setGoodsMessage(map);
+			 message.setGoodsImagePath(img);
+			 }
+		 for(MyOrderVO message:myOrderVOs) {
+			 System.out.println(message.toString());
+			 Iterator<Map.Entry<String, Double>> it = message.getGoodsMessage().entrySet().iterator();
+			 while (it.hasNext()) {
+				Map.Entry<String, Double> entry = it.next();
+				   System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
+			}
+			 System.out.println("订单信息");
+				System.out.println("商品信息"+message.getGoodsMessage());
+				System.out.println("商品图片"+message.getGoodsImagePath());
+			 
+		 }
+		 return myOrderVOs;
+	}
+	
+	
+	public  List<TbOrderInfo> findAllOrderInfo2(int userId){
+		 List<TbOrderInfo> orders = 	tbOrderInfoDao.findAllOrderInfo2(userId);
+		 return orders;
+	}
+	
+
+	@Override
+	public TbOrderInfo findTbOrderInfo(String out_trade_no) {
+		TbOrderInfo tbOrderInfo=tbOrderInfoDao.findTbOrderInfo(out_trade_no);
+		return tbOrderInfo;
+	}
+
+	@Override
+	public void updateTbOrderInfo(TbOrderInfo tbOrderInfo) {
+		tbOrderInfoDao.updateTbUserInfo(tbOrderInfo);
+		
+		
+	}
+	/**
+	 * @param tbOrderInfo
+	 * 修改订单状态
+	 * */
+	public void updateStatus(final TbOrderInfo tbOrderInfo){
+        final String hql = "update TbOrderInfo set orderStatus =? where orderId = ?";
+		
+       
+		getHibernateTemplate().execute(new HibernateCallback() {
+			
+			@Override
+			public Object doInHibernate(Session arg0) throws HibernateException,
+					SQLException {
+				Query query = arg0.createQuery(hql);
+				query.setInteger(0, tbOrderInfo.getOrderStatus());
+				query.setInteger(1, tbOrderInfo.getOrderId());
+				query.executeUpdate();
+				arg0.beginTransaction().commit();
+				return null;
+			}
+		})	;	
+	}
+
+	@Override
+	public List<TbOrderInfo> findTbThisOrderInfo(String out_trade_no) {
+		
+		return tbOrderInfoDao.findTbThistOrderInfo(out_trade_no);
+	}
+
+	@Override
+	public List<String> findAllOrderNumber(Integer userId) {
+		return tbOrderInfoDao.finAllOrderNumber(userId);
+	
+	}
+
+}

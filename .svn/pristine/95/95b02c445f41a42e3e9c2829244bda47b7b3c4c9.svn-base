@@ -1,0 +1,24 @@
+package com.qst.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.qst.dao.TbGoodsStyleInfoDao;
+import com.qst.dao.TbStyleDao;
+import com.qst.entity.TbGoodsStyleInfo;
+import com.qst.service.TbGoodsStyleInfoService;
+
+@Service
+public class TbGoodsStyleInfoServiceImpl implements TbGoodsStyleInfoService{
+	
+	@Autowired
+	private TbGoodsStyleInfoDao  tbGoodsStyleInfoDao;
+
+	@Override
+	public TbGoodsStyleInfo findGoodsStyle(int goodsStyleId) {
+		return tbGoodsStyleInfoDao.findGoodsStyle(goodsStyleId);
+	}
+
+}

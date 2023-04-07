@@ -1,0 +1,122 @@
+package com.qst.test;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.qst.dao.impl.TbGoodsTypeInfoDaoImpl;
+import com.qst.entity.TbGoodsDetailInfo;
+import com.qst.entity.TbGoodsImageInfo;
+import com.qst.entity.TbGoodsTypeInfo;
+
+
+
+public class TestType {
+	
+	
+	public static void main(String[] args) {		
+	String path = "applicationContext.xml";
+	ApplicationContext ac = new ClassPathXmlApplicationContext(path);
+	TbGoodsTypeInfoDaoImpl tgd = (TbGoodsTypeInfoDaoImpl)ac.getBean("tbGoodsTypeInfoDaoImpl");
+	List<TbGoodsDetailInfo> tgi1=new ArrayList<TbGoodsDetailInfo>();
+	//分类查询匹配
+	List<TbGoodsTypeInfo> tg=tgd.findGoodsType("",0,null,null);
+	//销量
+	boolean flag1=true;
+	//时间
+	boolean flag2=false;
+	//价格升序
+	boolean flag3=false;
+	//价格倒序
+	boolean flag4=false;
+	//类型id查询商品详情信息测试
+	//System.out.println("测试一"+tgd.findGoodsDetail(5));
+	
+	for(int i=0;i<tg.size();i++){
+		//得到类型id
+		int ggt=tg.get(i).getGoodsTypeId();
+		//存入tgi1合并展示
+		List<TbGoodsDetailInfo> tgi=tgd.findGoodsDetail(ggt,"");	
+		if(tgi.size()!=0){
+		tgi1.add(tgi.get(0));
+		System.out.println("测试               "+tgi.get(0).getGoodsName());
+		}
+	}
+	//当前页面值
+		int curPage = 1;
+		int totalNum= tgi1.size();
+		System.out.println("总记录条数"+totalNum);
+	    int totalPage;
+		int num = 10;
+		//totalNum = tg.size();
+		if (totalNum % num == 0){
+			totalPage = totalNum / num;
+		} else {
+			totalPage = totalNum / num + 1;
+		}
+
+		if (curPage < 1) {
+			curPage = 1;
+		}
+		if (curPage > totalPage) {
+			curPage = totalPage;
+		}
+		int start = (curPage - 1) * num;
+		int end= start + num;
+		System.out.println("start  "+start+"   "+"end  "+end);
+	//商品排序
+	if(flag1==true){
+	Collections.sort(tgi1, new Comparator<TbGoodsDetailInfo>() {
+        public int compare(TbGoodsDetailInfo arg0, TbGoodsDetailInfo arg1) {
+            return arg1.getGoodsSales().compareTo(arg0.getGoodsSales());
+        }
+    });
+	}
+	if(flag2==true){
+		Collections.sort(tgi1, new Comparator<TbGoodsDetailInfo>() {
+	        public int compare(TbGoodsDetailInfo arg0, TbGoodsDetailInfo arg1) {
+	            return arg1.getGoodsTime().compareTo(arg0.getGoodsTime());
+	        }
+	    });
+		}
+	if(flag3==true){
+		Collections.sort(tgi1, new Comparator<TbGoodsDetailInfo>() {
+	        public int compare(TbGoodsDetailInfo arg0, TbGoodsDetailInfo arg1) {
+	            return arg0.getGoodsPrice().compareTo(arg1.getGoodsPrice());
+	        }
+	    });
+		}
+	if(flag4==true){
+		Collections.sort(tgi1, new Comparator<TbGoodsDetailInfo>() {
+	        public int compare(TbGoodsDetailInfo arg0, TbGoodsDetailInfo arg1) {
+	            return arg1.getGoodsPrice().compareTo(arg0.getGoodsPrice());
+	        }
+	    });
+		}
+	
+	for(int j=0;j<tgi1.size();j++){
+		 //单件商品
+		if(j>=start&&j<end){
+		 System.out.println(tgi1.get(j).getGoodsName());
+		 System.out.println("价格：   "+tgi1.get(j).getGoodsPrice());
+		 System.out.println("时间：    "+tgi1.get(j).getGoodsTime());
+		 System.out.println("库存：    "+tgi1.get(j).getGoodsSales());
+		 List<TbGoodsImageInfo> tgi2=tgd.findGoodsImage(tgi1.get(j).getGoodsId());		
+		 if(tgi2.size() == 0) {
+				System.out.println("   ");
+			} else {
+				System.out.println(tgi2.get(0));
+			}
+		 System.out.println("--------------");
+		}
+	}
+	
+	
+	System.out.println("条数"+tgi1.size());
+	
+	}
+}

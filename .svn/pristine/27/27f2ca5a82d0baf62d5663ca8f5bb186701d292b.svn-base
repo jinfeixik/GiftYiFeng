@@ -1,0 +1,73 @@
+package com.qst.action;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Repository;
+
+import com.qst.entity.TbGoodsDetailInfo;
+import com.qst.entity.TbGoodsImageInfo;
+import com.qst.entity.TbGoodsStyleInfo;
+import com.qst.entity.TbUserCommentInfo;
+import com.qst.service.TbGoodsDetailInfoService;
+import com.qst.service.TbGoodsStyleInfoService;
+import com.qst.service.TbUserCommentInfoService;
+/**
+ * 
+ * @author 李阳liyang
+ * @date 2019-8-13上午10:27:09
+ * @version v1.0
+ */
+
+@Repository
+public class FindGoodsDetailAction {
+	
+	@Resource
+	private TbGoodsDetailInfoService tbGoodsDetailInfoService;
+	
+	@Resource
+	private TbUserCommentInfoService  tbUserCommentInfoService;
+	
+	@Resource
+	private TbGoodsStyleInfoService  tbGoodsStyleInfoService;
+	
+	private  TbGoodsDetailInfo  tbGoodsDetailInfo; 
+	
+	private  TbUserCommentInfo tbUserCommentInfo;
+		
+	private int goodsId;
+	
+	private List<TbUserCommentInfo> tbUserCommentInfos = new ArrayList<TbUserCommentInfo>();
+	
+	private List<TbGoodsStyleInfo> tbGoodsStyleInfos = new ArrayList<TbGoodsStyleInfo>();
+	
+	private List<TbGoodsImageInfo> TbGoodsImageInfos = new ArrayList<TbGoodsImageInfo>();
+	
+	public String findGoodsDetail(){
+		//商品详情信息
+		tbGoodsDetailInfo=tbGoodsDetailInfoService.findTbGoodsDetailInfo(goodsId);
+		
+		//评论信息
+		tbUserCommentInfos=tbUserCommentInfoService.findGoodsTbUserCommentInfos(goodsId);
+		
+		//样式信息
+		tbGoodsStyleInfos = tbGoodsStyleInfoService.findGoodStyleInfo(goodsId);
+		
+		for(int i=0;i<tbGoodsStyleInfos.size();i++){
+			
+			//样式名
+			tbGoodsStyleInfos.get(i).getGoodsStyleName();
+			
+			//图片信息
+			TbGoodsImageInfos.addAll(tbGoodsStyleInfoService.findGoodsImageInfo(tbGoodsStyleInfos.get(i).getGoodsImageId()));
+			
+			
+		}
+		return "success";
+	}
+	
+	
+
+}

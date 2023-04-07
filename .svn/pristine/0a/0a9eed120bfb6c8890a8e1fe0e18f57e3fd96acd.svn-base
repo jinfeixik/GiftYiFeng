@@ -1,0 +1,150 @@
+package com.qst.service.impl;
+
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Service;
+
+import com.qst.dao.TbGoodsStyleInfoDao;
+
+import com.qst.dao.TbUserCommentInfoDao;
+import com.qst.entity.TbGoodsImageInfo;
+
+
+
+import com.qst.entity.TbGoodsStyleInfo;
+import com.qst.entity.TbUserCommentInfo;
+import com.qst.service.TbGoodsStyleInfoService;
+
+
+@Service
+public class TbGoodsStyleInfoServiceImpl extends HibernateDaoSupport  implements TbGoodsStyleInfoService{
+    
+	@Autowired
+	private TbGoodsStyleInfoDao tbGoodsStyleInfoDao;
+	
+	@Resource
+	public void setSF(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TbGoodsStyleInfo> findGoodStyleInfo(final int goodsId) {
+		// TODO Auto-generated method stub
+		return getHibernateTemplate().executeFind(new HibernateCallback() {
+
+			@Override
+			public Object doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				String hql ="from TbGoodsStyleInfo where goodsId  = ?";
+				Query query = session.createQuery(hql);
+				query.setInteger(0, goodsId);		
+				List<TbGoodsStyleInfo>  tbGoodsStyleInfos = query.list();
+				return tbGoodsStyleInfos;
+			}
+		});
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TbGoodsImageInfo> findGoodsImageInfo(final int goodsImageId) {
+		// TODO Auto-generated method stub
+		return getHibernateTemplate().executeFind(new HibernateCallback() {
+
+			@Override
+			public Object doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				String hql ="from TbGoodsImageInfo where goodsImageId  = ?";
+				Query query = session.createQuery(hql);
+				query.setInteger(0, goodsImageId);		
+				List<TbGoodsImageInfo> tbGoodsImageInfos = query.list();
+				return tbGoodsImageInfos;
+			}
+		});
+	}
+	
+	@Override
+	public TbGoodsStyleInfo findGoodsStyle(int goodsStyleId) {
+		return tbGoodsStyleInfoDao.findGoodsStyle(goodsStyleId);
+	}
+
+
+	@Override
+	public int findImageIdStyle(Integer goodsStyleId) {
+		return tbGoodsStyleInfoDao.findImageIdStyle(goodsStyleId);
+		
+	}
+
+	@Override
+	public int findGoodsIdStyle(Integer goodsStyleId) {
+		return tbGoodsStyleInfoDao.findGoodsIdStyle(goodsStyleId);
+	}
+
+
+	@Override
+	public void addStyle(TbGoodsStyleInfo tbGoodsStyleInfo) {
+		// TODO Auto-generated method stub
+		tbGoodsStyleInfoDao.addStyle(tbGoodsStyleInfo);
+	}
+
+	@Override
+	public void deleteStyle(int id) {
+		// TODO Auto-generated method stub
+		TbGoodsStyleInfo tbGoodsStyleInfo = tbGoodsStyleInfoDao.findStyle(id);
+		if(tbGoodsStyleInfo != null) {
+			tbGoodsStyleInfoDao.deleteStyle(id);
+		}		
+		
+	}
+	
+	@Override
+	public void addGoods(TbGoodsStyleInfo tbGoodsStyleInfo) {
+		// TODO Auto-generated method stub
+		tbGoodsStyleInfoDao.addGoods(tbGoodsStyleInfo);
+		
+		
+	}
+
+	@Override
+	public TbGoodsStyleInfo findStyle(int styleId) {
+		// TODO Auto-generated method stub
+		TbGoodsStyleInfo tbGoodsStyleInfo = tbGoodsStyleInfoDao.findStyle(styleId);
+		return tbGoodsStyleInfo;
+	}
+
+	@Override
+	public void updateStyle(TbGoodsStyleInfo tbGoodsStyleInfo) {
+	
+		tbGoodsStyleInfoDao.updateStyle(tbGoodsStyleInfo);
+		
+	}
+	public void updateStock(TbGoodsStyleInfo tbGoodsStyleInfo){
+		tbGoodsStyleInfoDao.updateStock(tbGoodsStyleInfo);
+	}
+	public TbGoodsStyleInfoDao getTbGoodsStyleInfoDao() {
+		return tbGoodsStyleInfoDao;
+	}
+
+	public void setTbGoodsStyleInfoDao(TbGoodsStyleInfoDao tbGoodsStyleInfoDao) {
+		this.tbGoodsStyleInfoDao = tbGoodsStyleInfoDao;
+	}
+
+	@Override
+	public TbGoodsStyleInfo findGoodsStyleInfoService(int goodStyleId) {
+		
+		return tbGoodsStyleInfoDao.findGoodsStyleInfoService(goodStyleId);
+	}
+	
+
+}

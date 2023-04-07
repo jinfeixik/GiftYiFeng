@@ -1,0 +1,109 @@
+package com.qst.entity;
+
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/**
+ * TbShoppingCar entity. @author MyEclipse Persistence Tools
+ */
+@Component
+public class TbShoppingCar implements java.io.Serializable {
+
+	// Fields
+	private Integer shoppingCarId;
+	private Double shoppingCarAmount;
+	private Integer shoppingCarGoodsNumber;
+	private Integer goodsStyleId;
+	private Integer userId;
+
+	@Autowired
+	private TbGoodsStyleInfo tbGoodsStyleInfo;
+
+	private TbUserInfo tbUserInfo;
+
+	// Constructors
+
+	/** default constructor */
+	public TbShoppingCar() {
+	}
+
+	/** full constructor */
+	public TbShoppingCar(Double shoppingCarAmount,
+			Integer shoppingCarGoodsNumber, Integer goodsStyleId, Integer userId) {
+		this.shoppingCarAmount = shoppingCarAmount;
+		this.shoppingCarGoodsNumber = shoppingCarGoodsNumber;
+		this.goodsStyleId = goodsStyleId;
+		this.userId = userId;
+	}
+
+	// Property accessors
+
+	public Integer getShoppingCarId() {
+		return this.shoppingCarId;
+	}
+
+	public void setShoppingCarId(Integer shoppingCarId) {
+		this.shoppingCarId = shoppingCarId;
+	}
+
+	public Double getShoppingCarAmount() {
+		return this.shoppingCarAmount;
+	}
+
+	public void setShoppingCarAmount(Double shoppingCarAmount) {
+		this.shoppingCarAmount = shoppingCarAmount;
+	}
+
+	public Integer getShoppingCarGoodsNumber() {
+		return this.shoppingCarGoodsNumber;
+	}
+
+	public void setShoppingCarGoodsNumber(Integer shoppingCarGoodsNumber) {
+		this.shoppingCarGoodsNumber = shoppingCarGoodsNumber;
+	}
+
+	public Integer getGoodsStyleId() {
+		return this.goodsStyleId;
+	}
+
+	public void setGoodsStyleId(Integer goodsStyleId) {
+		this.goodsStyleId = goodsStyleId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public TbGoodsStyleInfo getTbGoodsStyleInfo() {
+		return tbGoodsStyleInfo;
+	}
+
+	public void setTbGoodsStyleInfo(TbGoodsStyleInfo tbGoodsStyleInfo) {
+		this.tbGoodsStyleInfo = tbGoodsStyleInfo;
+	}
+
+	public TbUserInfo getTbUserInfo() {
+		return tbUserInfo;
+	}
+
+	public void setTbUserInfo(TbUserInfo tbUserInfo) {
+		this.tbUserInfo = tbUserInfo;
+	}
+
+	/*@Override
+	public String toString() {
+		return "TbShoppingCar [shoppingCarId=" + shoppingCarId
+				+ ", shoppingCarAmount=" + shoppingCarAmount
+				+ ", shoppingCarGoodsNumber=" + shoppingCarGoodsNumber
+				+ ", goodsStyleId=" + goodsStyleId + ", userId=" + userId
+				+ ", tbGoodsStyleInfo=" + tbGoodsStyleInfo + ", tbUserInfo="
+				+ tbUserInfo + "]";
+	}*/
+
+}

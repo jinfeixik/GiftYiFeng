@@ -1,0 +1,150 @@
+package com.qst.entity;
+
+import java.util.Set;
+
+import org.springframework.stereotype.Component;
+
+/**
+ * TbUserInfo entity. @author MyEclipse Persistence Tools
+ */
+
+@Component
+public class TbUserInfo{
+
+	// Fields
+
+	private Integer userId;
+	private String userPassword;
+	private String userName;
+	private String userBirthday;
+	private Integer userLevel;
+	private Integer userSex;
+	private String userEmail;
+	private String userPhoneNumber;
+
+	private Set<TbShoppingCar> tbShoppingCar;
+	private Set<TbUserAddressInfo> tbUserAddressInfo;
+	private Set<TbOrderInfo> tbOrderInfo;
+
+	// Constructors
+
+	/** default constructor */
+	public TbUserInfo() {
+	}
+
+	/** full constructor */
+	public TbUserInfo(String userPassword, String userName,
+			String userBirthday, Integer userLevel, Integer userSex,
+			String userEmail, String userPhoneNumber) {
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.userBirthday = userBirthday;
+		this.userLevel = userLevel;
+		this.userSex = userSex;
+		this.userEmail = userEmail;
+		this.userPhoneNumber = userPhoneNumber;
+	}
+
+	// Property accessors
+
+	@Override
+	public String toString() {
+		return "TbUserInfo [userId=" + userId + ", userPassword="
+				+ userPassword + ", userName=" + userName + ", userBirthday="
+				+ userBirthday + ", userLevel=" + userLevel + ", userSex="
+				+ userSex + ", userEmail=" + userEmail + ", userPhoneNumber="
+				+ userPhoneNumber + "]";
+	}
+
+	public Integer getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getUserPassword() {
+		return this.userPassword;
+	}
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}
+
+	public String getUserName() {
+		return this.userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserBirthday() {
+		return this.userBirthday;
+	}
+
+	public void setUserBirthday(String userBirthday) {
+		this.userBirthday = userBirthday;
+	}
+
+	public Integer getUserLevel() {
+		return this.userLevel;
+	}
+
+	public void setUserLevel(Integer userLevel) {
+		this.userLevel = userLevel;
+	}
+
+	public Integer getUserSex() {
+		return this.userSex;
+	}
+
+	public void setUserSex(Integer userSex) {
+		this.userSex = userSex;
+	}
+
+	public String getUserEmail() {
+		return this.userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getUserPhoneNumber() {
+		return this.userPhoneNumber;
+	}
+
+	public void setUserPhoneNumber(String userPhoneNumber) {
+		this.userPhoneNumber = userPhoneNumber;
+	}
+
+	public Set<TbShoppingCar> getTbShoppingCar() {
+		return tbShoppingCar;
+	}
+
+	public void setTbShoppingCar(Set<TbShoppingCar> tbShoppingCar) {
+		this.tbShoppingCar = tbShoppingCar;
+	}
+
+	public Set<TbUserAddressInfo> getTbUserAddressInfo() {
+		return tbUserAddressInfo;
+	}
+
+	public void setTbUserAddressInfo(Set<TbUserAddressInfo> tbUserAddressInfo) {
+		this.tbUserAddressInfo = tbUserAddressInfo;
+	}
+
+	public Set<TbOrderInfo> getTbOrderInfo() {
+		return tbOrderInfo;
+	}
+
+	public void setTbOrderInfo(Set<TbOrderInfo> tbOrderInfo) {
+		this.tbOrderInfo = tbOrderInfo;
+	}
+	
+	
+
+	
+}

@@ -1,0 +1,39 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page import="com.qst.entity.*"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<base href="<%=basePath%>">
+
+<title>修改地址</title>
+
+</head>
+
+<body>
+	<h1>修改收货地址</h1>
+	<form action="toUpdateAddress?addressId=${tbUserAddressInfo.addressId}" method="post">
+		收货人：<input type="text" name="tbUserAddressInfo.addressReciverName"  value="${tbUserAddressInfo.addressReciverName}"/><br/>
+		手机号:<input type="text" name="tbUserAddressInfo.addressReciverPhoneNumber" value="${tbUserAddressInfo.addressReciverPhoneNumber }"/><br/>
+		收货地区：<input type="text" name="tbUserAddressInfo.addressReciverAddress"  value="${tbUserAddressInfo.addressReciverAddress }"/><br/>
+		详细地址：<input type="text" name="tbUserAddressInfo.addressReciverDetailAddress" value="${tbUserAddressInfo.addressReciverDetailAddress}" /><br/>
+		<c:choose>
+		 <c:when test="${tbUserAddressInfo.addressDefaultAddress==0}">
+		   <input type="checkbox" name="tbUserAddressInfo.addressDefaultAddress" value="0" checked="checked"/>设为默认<br/><br/>
+		 </c:when>
+		 <c:otherwise>
+		   <input type="checkbox" name="tbUserAddressInfo.addressDefaultAddress" value="1" />设为默认<br/><br/>
+		 </c:otherwise>
+		</c:choose>
+		<input type="submit" value="提交" />
+	</form>
+</body>
+</html>

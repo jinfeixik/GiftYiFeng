@@ -1,0 +1,231 @@
+package com.qst.action;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.annotation.Resource;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
+
+import xyz.peter.UpLoadImageBed;
+
+import com.qst.dao.impl.TbStyleDaoImpl;
+import com.qst.entity.TbGoodsDetailInfo;
+import com.qst.entity.TbGoodsImageInfo;
+import com.qst.entity.TbGoodsStyleInfo;
+import com.qst.entity.TbGoodsTypeInfo;
+import com.qst.service.TbGoodsDetailInfoService;
+
+/**
+ * @author 袁滢yuanying
+ * @date 2019-8-6下午9:01:30
+ * @version v1.0 添加商品记录
+ */
+@Repository
+@Scope("prototype")
+public class AddGoodsAction {
+
+	@Resource
+	private TbStyleDaoImpl bStyleDaoImpl;
+	@Resource
+	private TbGoodsDetailInfoService tbGoodsDetailInfoService;
+
+	private TbGoodsDetailInfo tbGoodsDetailInfo;
+
+	private TbGoodsTypeInfo tbGoodsTypeInfo;
+
+	private List<TbGoodsStyleInfo> tbGoodsStyleInfo = new ArrayList<TbGoodsStyleInfo>();
+
+	// 图片
+	private List<File> myFile;
+	private List<String> fileName = new ArrayList<String>(); // 文件名
+
+	/**
+	 * @return 添加一条商品详情记录
+	 * @throws FileNotFoundException
+	 */
+	public String addGoods() throws FileNotFoundException {
+
+		List<TbGoodsStyleInfo> styles = new ArrayList<TbGoodsStyleInfo>();
+		if (myFile == null) {
+
+			styles = tbGoodsStyleInfo;
+			System.out.println("没有图片");
+
+		}
+
+		System.out.println(tbGoodsStyleInfo.size());
+
+		for (int i = 0; i < myFile.size(); i++) {
+			TbGoodsStyleInfo style = tbGoodsStyleInfo.get(i);
+
+			System.out.println("样式" + style.toString());
+
+			TbGoodsImageInfo tbGoodsImageInfo = new TbGoodsImageInfo();
+
+			FileInputStream is = new FileInputStream(myFile.get(i));
+			String name = fileName.get(i);
+			System.out.println("name="+name);
+			System.out.println(is);
+			String url = UpLoadImageBed.up(is, name);
+			
+
+			tbGoodsImageInfo.setGoodsImagePath(url);
+			style.setTbGoodsImageInfo(tbGoodsImageInfo);
+
+			styles.add(style);
+
+		}
+
+		System.out.println("完成文件上传1");
+		Set<TbGoodsStyleInfo> tbGoodsStyleInfos = new HashSet<TbGoodsStyleInfo>(
+				styles);
+		tbGoodsDetailInfo.setTbGoodsStyleInfo(tbGoodsStyleInfos);
+
+		for (TbGoodsStyleInfo info : tbGoodsStyleInfos) {
+			System.out.println(info.getGoodsStyleName() + "样式名");
+
+		}
+
+		System.out.println(tbGoodsDetailInfo.getGoodsPrice());
+		// 给订单添加类型
+		if (tbGoodsDetailInfo.getGoodsPrice() < 100) {
+			tbGoodsTypeInfo.setGoodsTypePrice("1");
+		} else if (tbGoodsDetailInfo.getGoodsPrice() < 200) {
+			tbGoodsTypeInfo.setGoodsTypePrice("2");
+		} else if (tbGoodsDetailInfo.getGoodsPrice() < 300) {
+			tbGoodsTypeInfo.setGoodsTypePrice("3");
+		} else if (tbGoodsDetailInfo.getGoodsPrice() < 500) {
+			tbGoodsTypeInfo.setGoodsTypePrice("4");
+		} else {
+			tbGoodsTypeInfo.setGoodsTypePrice("5");
+		}
+		tbGoodsDetailInfo.setTbGoodsTypeInfo(tbGoodsTypeInfo);
+
+		// 给商品添加上架时间
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String dateStr = sdf.format(date);
+		tbGoodsDetailInfo.setGoodsTime(dateStr);
+
+		System.out.println("商品详情" + tbGoodsDetailInfo.toString());
+
+		if (tbGoodsDetailInfo.getGoodsName() == null) {
+			System.out.println("该商品信息不完善");
+			return "addGoodsError";
+		}
+
+		tbGoodsDetailInfoService.addTbGoodsDetailInfo(tbGoodsDetailInfo);
+
+		System.out.println("action成功");
+		return "success";
+	}
+
+	   public String addGood() throws FileNotFoundException {
+       System.out.println("hhhh" +tbGoodsDetailInfo.toString());
+		//传入类型
+		tbGoodsTypeInfo.setGoodsTypePrice(this.priceNum(tbGoodsDetailInfo.getGoodsPrice()));
+		tbGoodsDetailInfo.setTbGoodsTypeInfo(tbGoodsTypeInfo);
+		tbGoodsDetailInfoService.addTbGoodsDetailInfo(tbGoodsDetailInfo);
+		int index = 0;
+		
+		for (TbGoodsStyleInfo info : tbGoodsStyleInfo) {
+				//存入图片
+			String url = "http://www.peter666.xyz/uploadimgtopeter666/ImageBed/2019/08/10/1565366478803.png";
+			if(myFile == null) {
+				System.out.println("没有图片");
+			} else  if(myFile.get(index) != null) {
+				FileInputStream is = new FileInputStream(myFile.get(index));
+				String name = fileName.get(index);
+				url = UpLoadImageBed.up(is, name);
+				
+			}
+			TbGoodsImageInfo tbGoodsImageInfo = new TbGoodsImageInfo();
+			tbGoodsImageInfo.setGoodsImagePath(url);
+			
+			info.setTbGoodsImageInfo(tbGoodsImageInfo);
+			System.out.println("商品id" +tbGoodsDetailInfo.getGoodsId());
+			info.setGoodsId(tbGoodsDetailInfo.getGoodsId());
+			//bStyleDaoImpl.addGoods(info);
+			
+			
+		}
+		
+		
+		System.out.println("添加成功");
+
+		return "success";
+	}
+
+	public String priceNum(Double double1) {
+		if (double1 < 100) {
+			return "1";
+		} else if (double1 < 200) {
+			return "2";
+		} else if (double1 < 300) {
+			return "3";
+		} else if (double1 < 500) {
+			return "4";
+		} else {
+			return "5";
+		}
+	}
+
+	public List<TbGoodsStyleInfo> getTbGoodsStyleInfo() {
+		return tbGoodsStyleInfo;
+	}
+
+	public void setTbGoodsStyleInfo(List<TbGoodsStyleInfo> tbGoodsStyleInfo) {
+		this.tbGoodsStyleInfo = tbGoodsStyleInfo;
+	}
+
+	public TbGoodsDetailInfo getTbGoodsDetailInfo() {
+		return tbGoodsDetailInfo;
+	}
+
+	public void setTbGoodsDetailInfo(TbGoodsDetailInfo tbGoodsDetailInfo) {
+		this.tbGoodsDetailInfo = tbGoodsDetailInfo;
+	}
+
+	public TbGoodsDetailInfoService getTbGoodsDetailInfoService() {
+		return tbGoodsDetailInfoService;
+	}
+
+	public void setTbGoodsDetailInfoService(
+			TbGoodsDetailInfoService tbGoodsDetailInfoService) {
+		this.tbGoodsDetailInfoService = tbGoodsDetailInfoService;
+	}
+
+	public List<File> getMyFile() {
+		return myFile;
+	}
+
+	public void setMyFile(List<File> myFile) {
+		this.myFile = myFile;
+	}
+
+	public List<String> getMyFileFileName() {
+		return fileName;
+	}
+
+	public void setMyFileFileName(List<String> fileName) {
+		this.fileName = fileName;
+	}
+
+	public TbGoodsTypeInfo getTbGoodsTypeInfo() {
+		return tbGoodsTypeInfo;
+	}
+
+	public void setTbGoodsTypeInfo(TbGoodsTypeInfo tbGoodsTypeInfo) {
+		this.tbGoodsTypeInfo = tbGoodsTypeInfo;
+	}
+
+}

@@ -1,0 +1,46 @@
+package com.qst.dao;
+
+
+
+import java.util.List;
+
+import com.qst.entity.TbOrderInfo;
+import com.qst.service.TbOrderInfoService;
+import com.qst.vo.MyOrderVO;
+
+
+/**
+ * 
+ * @author 李阳liyang
+ * @date 2019-8-8下午7:30:54
+ * @version v1.0
+ */
+
+public interface TbOrderInfoDao {
+
+	public void add(TbOrderInfo tbOrderInfo);
+	
+	public String createOrderNum();
+	
+	public String createOrderTime();
+	
+	public List<TbOrderInfo> findAllOrderInfo2(int userId) ;
+
+	public void addOrderInfo(TbOrderInfo tbOrderInfo);
+	
+	public TbOrderInfo findTbOrderInfo(String out_trade_no);
+
+	public void updateTbUserInfo(TbOrderInfo tbOrderInfo);
+		
+
+	public List<TbOrderInfo> findTbThistOrderInfo(String out_trade_no);
+
+	public List<String> finAllOrderNumber(Integer userId);
+	
+	
+
+	public TbOrderInfo findTbOrderInfo(String orderNumber, int styleId);
+
+	public List<TbOrderInfo> findAllOrderInfos();
+
+}

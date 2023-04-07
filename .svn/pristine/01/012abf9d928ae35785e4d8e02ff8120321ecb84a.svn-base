@@ -1,0 +1,82 @@
+package com.qst.dao.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
+
+import com.qst.dao.TbGoodsTypeInfoDao;
+import com.qst.dao.TbUserInfoDao;
+import com.qst.entity.TbGoodsDetailInfo;
+import com.qst.entity.TbGoodsImageInfo;
+import com.qst.entity.TbGoodsTypeInfo;
+@Repository
+public class TbGoodsTypeInfoDaoImpl extends  HibernateDaoSupport implements TbGoodsTypeInfoDao{
+
+	
+    @Resource
+    public void setST(SessionFactory sessionFactory){
+    	super.setSessionFactory(sessionFactory);
+    }
+    //条件查询
+	@Override
+	public List<TbGoodsTypeInfo> findGoodsType(String occation, int price, String object, String classify) {
+		StringBuffer hql = new StringBuffer("from TbGoodsTypeInfo where 1=1 ");
+		//场合
+		if (occation != null &&!occation.equals("")) {
+			hql.append("and goodsTypeOccation like '%" + occation + "%'");
+		}		                
+		//价格
+		if (price != 0) {
+			hql.append(" and goodsTypePrice ="+price+"");
+		}
+		//对象
+		if (object != null && !object.equals("")) {
+			hql.append(" and goodsTypeObject like '%" + object + "%'");
+		}
+		//类型
+		if (classify != null && !classify.equals("")) {
+			hql.append(" and goodsTypeClassify like '%" + classify + "%'");
+		}
+		String hql1 = hql.toString();
+		System.out.println("搜索语句" +hql1);
+		List<TbGoodsTypeInfo> gt = getHibernateTemplate().find(hql1);
+		return gt;
+	}
+	//获取商品详情数据分页
+	
+	//获取总商品条数
+	public int findGoodsTotals() {
+		String hql = "select count(*) from TbGoodsDetailInfo where 1=1";
+		List<Object> obj = getHibernateTemplate().find(hql);
+		int count = Integer.parseInt(obj.get(0).toString());
+		System.out.println("商品总条数 " + count);
+		return count;
+	}
+	//获取满足id要求的数据总条数,暂时不用
+	public int totalPages(int goodsTypeId) {
+		String hql = "select count(*) from TbGoodsDetailInfo where goodsTypeId=?";
+		List<Object> obj = getHibernateTemplate().find(hql);
+		int count = Integer.parseInt(obj.get(0).toString());
+		return count;
+	}
+	@Override
+	public TbGoodsDetailInfo findDetalilInfo(int id) {
+		String hql = "from TbGoodsDetailInfo where goodsTypeId = ?";
+		List<TbGoodsDetailInfo> detail = (List<TbGoodsDetailInfo> ) getHibernateTemplate().find(hql, id);
+		if(detail.size() != 0) {
+			return detail.get(0);
+		} else {
+			return null;
+		}
+	}
+
+}

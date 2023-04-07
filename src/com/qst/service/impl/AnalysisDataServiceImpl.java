@@ -1,0 +1,43 @@
+package com.qst.service.impl;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.qst.dao.AnalysisDataDao;
+import com.qst.entity.TbUserAddressInfo;
+import com.qst.entity.TbUserInfo;
+import com.qst.service.AnalysisDataService;
+/**
+ * 
+ * @author 李阳liyang
+ * @date 2019-8-12下午8:33:13
+ * @version v1.0
+ */
+@Service
+public class AnalysisDataServiceImpl implements AnalysisDataService{
+
+	
+	@Autowired
+	private AnalysisDataDao analysisDataDao;
+	
+	@Override
+	public List<TbUserInfo> findUserAll() {
+		// TODO Auto-generated method stub
+		String hql="from TbUserInfo";
+		List<TbUserInfo> tbUserInfos= analysisDataDao. findUserAll(hql);
+		return tbUserInfos;
+	}
+
+	@Override
+	public List<TbUserAddressInfo> findUserAddress() {
+		// TODO Auto-generated method stub
+		String hql="from TbUserAddressInfo";
+		List<TbUserAddressInfo> tbUserAddressInfos= analysisDataDao. findUserAddress(hql);
+		return tbUserAddressInfos;
+	}
+
+}

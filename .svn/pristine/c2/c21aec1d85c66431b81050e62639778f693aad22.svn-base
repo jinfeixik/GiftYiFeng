@@ -1,0 +1,8 @@
+package com.qst.dao;
+
+
+import com.qst.entity.TbGoodsStyleInfo;
+
+public interface TbGoodsStyleInfoDao {
+	public TbGoodsStyleInfo findGoodsStyle(int goodsStyleId);
+}

@@ -1,0 +1,88 @@
+package com.qst.vo;
+
+import java.io.Serializable;
+
+public class MyOrderListVO  implements Serializable{
+	
+private Integer orderId;//订单区别Id
+private String  orderOrderNumber;//订单号
+private String  orderOrderTime;//订单时间
+private Integer orderStatus;//订单状态
+
+private int  goodsStyleId;//商品样式id
+private String  goodsStyleName;//商品样式名
+private String  goodsImagePath;//商品图片
+
+private Double  goodsTypePrice;//价格
+
+public Integer getOrderId() {
+	return orderId;
+}
+
+public void setOrderId(Integer orderId) {
+	this.orderId = orderId;
+}
+
+public String getOrderOrderNumber() {
+	return orderOrderNumber;
+}
+
+public void setOrderOrderNumber(String orderOrderNumber) {
+	this.orderOrderNumber = orderOrderNumber;
+}
+
+public String getOrderOrderTime() {
+	return orderOrderTime;
+}
+
+public void setOrderOrderTime(String orderOrderTime) {
+	this.orderOrderTime = orderOrderTime;
+}
+
+public Integer getOrderStatus() {
+	return orderStatus;
+}
+
+public void setOrderStatus(Integer orderStatus) {
+	this.orderStatus = orderStatus;
+}
+
+
+public int getGoodsStyleId() {
+	return goodsStyleId;
+}
+
+public void setGoodsStyleId(int goodsStyleId) {
+	this.goodsStyleId = goodsStyleId;
+}
+
+public String getGoodsStyleName() {
+	return goodsStyleName;
+}
+
+public void setGoodsStyleName(String goodsStyleName) {
+	this.goodsStyleName = goodsStyleName;
+}
+
+public String getGoodsImagePath() {
+	return goodsImagePath;
+}
+
+public void setGoodsImagePath(String goodsImagePath) {
+	this.goodsImagePath = goodsImagePath;
+}
+
+public Double getGoodsTypePrice() {
+	return goodsTypePrice;
+}
+
+public void setGoodsTypePrice(Double goodsTypePrice) {
+	this.goodsTypePrice = goodsTypePrice;
+}
+
+
+
+
+
+
+}

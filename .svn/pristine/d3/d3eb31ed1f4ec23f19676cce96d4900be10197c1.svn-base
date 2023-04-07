@@ -1,0 +1,53 @@
+package com.qst.entity;
+
+/**
+ * TbMyCollect entity. @author MyEclipse Persistence Tools
+ */
+
+public class TbMyCollect implements java.io.Serializable {
+
+	// Fields
+
+	private Integer myCollectId;
+	private Integer userId;
+	private Integer goodsStyleId;
+
+	// Constructors
+
+	/** default constructor */
+	public TbMyCollect() {
+	}
+
+	/** full constructor */
+	public TbMyCollect(Integer userId, Integer goodsStyleId) {
+		this.userId = userId;
+		this.goodsStyleId = goodsStyleId;
+	}
+
+	// Property accessors
+
+	public Integer getMyCollectId() {
+		return this.myCollectId;
+	}
+
+	public void setMyCollectId(Integer myCollectId) {
+		this.myCollectId = myCollectId;
+	}
+
+	public Integer getUserId() {
+		return this.userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getGoodsStyleId() {
+		return this.goodsStyleId;
+	}
+
+	public void setGoodsStyleId(Integer goodsStyleId) {
+		this.goodsStyleId = goodsStyleId;
+	}
+
+}
